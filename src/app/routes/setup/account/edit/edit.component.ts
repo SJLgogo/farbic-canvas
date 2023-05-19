@@ -18,7 +18,7 @@ export class SetupAccountEditComponent implements OnInit {
   @ViewChild('sf', { static: false }) sf!: SFComponent;
   schema: SFSchema = {
     properties: {
-      mobilePhone: { type: 'string', title: '手机号', format: 'mobile' },
+      mobilePhone: { type: 'string', title: '登录账号' },
       thirdPartyName: { type: 'string', title: '姓名' },
       password: { type: 'string', title: '密码' }
     },

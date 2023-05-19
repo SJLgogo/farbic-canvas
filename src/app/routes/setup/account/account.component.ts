@@ -44,7 +44,7 @@ export class SetupAccountComponent implements OnInit {
   ];
 
   ngOnInit() {
-    this.acl.setAbility(['add_examine']);
+    // this.acl.setAbility(['add_examine']);
   }
 
   constructor(private http: _HttpClient, private modal: ModalHelper, public acl: ACLService) {
@@ -58,6 +58,7 @@ export class SetupAccountComponent implements OnInit {
 
   close() {
     // this.modalRef.destroy();
+
   }
 
   /**
