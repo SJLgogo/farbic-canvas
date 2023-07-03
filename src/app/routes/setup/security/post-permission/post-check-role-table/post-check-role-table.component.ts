@@ -1,9 +1,10 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { _HttpClient } from '@delon/theme';
-import { SFSchema, SFUISchema } from '@delon/form';
+import { SFSchema, SFSchemaEnumType, SFUISchema } from '@delon/form';
 import { STColumn, STComponent } from '@delon/abc/st';
 import { NzModalRef } from 'ng-zorro-antd/modal';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-setup-post-check-role-table',
@@ -40,7 +41,31 @@ export class SetupPostCheckRoleTableComponent implements OnInit,AfterViewInit {
       name: {
         type: 'string',
         title: '角色名称'
-      }
+      },
+      appId: {
+        type: 'string', title: '应用名称',
+        ui: {
+          width: 300,
+          placeHolder: '请输入', widget: 'select',
+          asyncData: () => {
+            return this.http.get(`/base/api/agent/app/find-all`).pipe(
+              map((item) => {
+                const children = item.data.map((element: any) => {
+                  return { label: element.name, value: element.id };
+                });
+                const type: SFSchemaEnumType = [
+                  {
+                    label: '应用列表',
+                    group: true,
+                    children
+                  }
+                ];
+                return type;
+              })
+            );
+          },
+        }
+      },
     }
   };
   @ViewChild('st', { static: false }) st!: STComponent;
@@ -50,10 +75,11 @@ export class SetupPostCheckRoleTableComponent implements OnInit,AfterViewInit {
       index: 'id',
       type: 'checkbox'
     },
-    { title: '名称', index: 'name', width: '100px' },
-    { title: 'appId', index: 'appId', width: '100px' },
-    { title: '编码', index: 'code', width: '100px' },
-    // { title: '公司', index: 'companyName', width: '100px' },
+    { title: '名称', index: 'name'},
+    { title: '公司', index: 'companyName' },
+    { title: '应用名称', index: 'appName' },
+    { title: '应用appId', index: 'appId' },
+    { title: '编码', index: 'code' },
 
   ];
 

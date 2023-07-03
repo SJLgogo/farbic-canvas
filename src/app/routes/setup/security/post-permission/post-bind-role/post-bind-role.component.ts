@@ -1,10 +1,20 @@
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild
+} from '@angular/core';
 import { _HttpClient, ModalHelper, SettingsService } from '@delon/theme';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
-import { SFComponent, SFSchema } from '@delon/form';
+import { SFComponent, SFSchema, SFSchemaEnumType } from '@delon/form';
 import { STChange, STClickRowClassNameType, STColumn, STComponent } from '@delon/abc/st';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { SetupPostCheckRoleTableComponent } from '../post-check-role-table/post-check-role-table.component';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-setup-post-bind-role',
@@ -55,9 +65,9 @@ export class SetupPostBindRoleComponent implements OnInit {
       ]
     },
     { title: '角色名称', index: 'role.name', width: '100px' },
-    { title: '角色编码', index: 'role.code', width: '100px' }
-    // {title: '公司', index: 'companyName', width: '100px'},
-    // {title: '邮箱', index: 'email', width: '100px'},
+    { title: '角色编码', index: 'role.code', width: '100px' },
+    {title: '应用名称', index: 'role.appName', width: '100px'},
+    {title: '应用appId', index: 'role.appId', width: '100px'},
     // {title: '手机号', index: 'mobilePhone', width: '100px'},
   ];
 
@@ -65,7 +75,7 @@ export class SetupPostBindRoleComponent implements OnInit {
     private http: _HttpClient,
     private modal: ModalHelper,
     public settingsService: SettingsService,
-    private messageService: NzMessageService
+    private messageService: NzMessageService,
   ) {
   }
 
@@ -82,8 +92,7 @@ export class SetupPostBindRoleComponent implements OnInit {
 
 
   addUserPost() {
-    this.modal
-      .createStatic(SetupPostCheckRoleTableComponent, {
+    this.modal.createStatic(SetupPostCheckRoleTableComponent, {
         i: { postId: this.post.id },
         mode: 'add'
       })
@@ -107,6 +116,15 @@ export class SetupPostBindRoleComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges): void {
     this.reloadTable();
   }
+
+  onTabSelectChange(event: any): void {
+    // 检查当前选中的 tab 是否为 "岗位-角色-绑定"
+    if (event.index === 0) {
+      // 在这里刷新表格数据
+      this.reloadTable();
+    }
+  }
+
 
   /**
    * 刷新表格数据

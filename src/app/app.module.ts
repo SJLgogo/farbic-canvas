@@ -29,6 +29,9 @@ import { RoutesModule } from './routes/routes.module';
 import { SharedModule } from './shared/shared.module';
 import { STWidgetModule } from './shared/st-widget/st-widget.module';
 import { Observable } from 'rxjs';
+import { WidgetRegistry } from '@delon/form';
+import { SelectEmployeeButtonComponent } from './shared/components/select-employee-button/select-employee-button.component';
+import { DelonACLModule } from '@delon/acl';
 
 const LANG = {
   abbr: 'zh',
@@ -86,6 +89,7 @@ const APPINIT_PROVIDES = [
 @NgModule({
   declarations: [AppComponent],
   imports: [
+    DelonACLModule.forRoot(),
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
@@ -102,4 +106,9 @@ const APPINIT_PROVIDES = [
   providers: [...LANG_PROVIDES, ...INTERCEPTOR_PROVIDES, ...I18NSERVICE_PROVIDES, ...APPINIT_PROVIDES],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule {
+  //注册选人的button小部件
+  constructor(widgetRegistry: WidgetRegistry) {
+    widgetRegistry.register(SelectEmployeeButtonComponent.KEY /* 'range-input' */, SelectEmployeeButtonComponent);
+  }
+}

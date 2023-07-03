@@ -68,6 +68,8 @@ export class SetupContactComponent implements OnInit {
           return '钉钉';
         } else if (item.scene == '' || item.scene == null) {
           return '其它平台';
+        } else if (item.scene == 'this_platform') {
+          return '本平台';
         } else {
           return item.scene;
         }
@@ -221,7 +223,8 @@ export class SetupContactComponent implements OnInit {
             name: node.title
           }
         })
-        .subscribe(() => {});
+        .subscribe(() => {
+        });
     } else if (opt === 'add') {
       this.modal
         .createStatic(
@@ -416,13 +419,15 @@ export class SetupContactComponent implements OnInit {
     private modalSrv: NzModalService,
     private msgSrv: NzMessageService,
     private nzContextMenuService: NzContextMenuService
-  ) {}
+  ) {
+  }
 
   selectUser() {
     const mode = ['employee', 'organization', 'post', 'job', 'tag'];
   }
 
-  openFolder(node: any): void {}
+  openFolder(node: any): void {
+  }
 
   ngOnInit() {
     this.loadOrgTree();
@@ -431,7 +436,7 @@ export class SetupContactComponent implements OnInit {
   choosePerson1() {
     this.modal
       .createStatic(SelectProjectPersonComponent, {
-        chooseMode: 'organization', // department organization employee
+        chooseMode: 'employee', // department organization employee
         functionName: '1',
         singleChoice: true
       })
@@ -443,7 +448,7 @@ export class SetupContactComponent implements OnInit {
   choosePerson2() {
     this.modal
       .createStatic(SelectProjectPersonComponent, {
-        chooseMode: 'organization', // department organization employee
+        chooseMode: 'employee', // department organization employee
         functionName: '2'
       })
       .subscribe(res => {

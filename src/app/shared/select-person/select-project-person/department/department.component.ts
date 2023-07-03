@@ -5,6 +5,8 @@ import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { fn, TreeNode, variable, Person, Organization, selected, DepartmentClass, Common } from './department.interface';
 import { RxjsChangeService } from '../../rxjsChange.service';
 import { Unsubscribable } from 'rxjs';
+import { add } from 'lodash';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-department',
@@ -34,6 +36,7 @@ export class DepartmentComponent extends DepartmentClass implements OnInit, OnDe
     private modal: ModalHelper,
     private modalRef: NzModalRef,
     private msgSrv: NzModalService,
+    private msg: NzMessageService,
     private rxjsChangeService: RxjsChangeService
   ) {
     super();
@@ -87,6 +90,32 @@ export class DepartmentComponent extends DepartmentClass implements OnInit, OnDe
       this.http.post(`/org/service/organization/admin/account/global-search`, params).subscribe((res: any) => {
         if (res.success) {
           this.panels = res.data;
+          if (!this.panels[0]) {
+            this.msg.warning('在您的权限范围内未搜索到！')
+          }
+
+          this.panels.forEach((panel: any, idx: number) => {
+            if (this.chooseMode == 'employee') {
+              panel.childPanel = panel?.childPanel?.filter((i: any) => i.type == 'employee')
+              panel.childPanel.length == 0 ? this.panels.splice(idx, 1) : ''
+            }
+            if (this.chooseMode == 'org') {
+              panel.childPanel = panel?.childPanel?.filter((i: any) => i.type == 'organization')
+              panel.childPanel.length == 0 ? this.panels.splice(idx, 1) : ''
+            }
+          })
+
+          this.panels[0]?.childPanel.forEach((i: any) => {
+            i.phone = i.mobilePhone ? i.mobilePhone : i.jobNumber ? i.jobNumber : ''
+            if (i.type == 'employee') {
+              i.orgName = i.org?.map((val: any) => {
+                const index = val.pathName.indexOf('/');
+                return val.pathName.substring(index + 1);
+              }).join(';')
+            }
+          })
+
+
         }
         this.orgTreeLoading = false;
       });
@@ -111,8 +140,11 @@ export class DepartmentComponent extends DepartmentClass implements OnInit, OnDe
       this.http
         .get(`/org/service/organization/admin/organization/tree/child/` + node.origin!.key + '/' + node.origin['companyId'])
         .subscribe((res: any) => {
-          if (res.data[0].category == 'employee' && this.chooseMode == 'org') {
-            node.addChildren([]);
+          console.log(this.chooseMode);
+          if (this.chooseMode == 'org') {
+            const departmentList = this.removePerson(res.data)
+            console.log(departmentList);
+            node.addChildren(departmentList);
             return;
           } else {
             res.success && node.addChildren(res.data);
@@ -120,6 +152,20 @@ export class DepartmentComponent extends DepartmentClass implements OnInit, OnDe
         });
     }
   }
+
+  /** 
+   * 递归移除人员
+   */
+  removePerson(list: any): any {
+    const res = list.filter((i: any) => i.category == 'org')
+    list.forEach((val: any) => {
+      if (val.children?.length) {
+        val.children = this.removePerson(val.children)
+      }
+    })
+    return res
+  }
+
 
   treeNodeClick(node: NzTreeNode): void {
     switch (this.chooseMode) {
@@ -136,24 +182,31 @@ export class DepartmentComponent extends DepartmentClass implements OnInit, OnDe
   }
 
   optSearchResult(value: any) {
+    const name = value.type == "organization" ? value.pathName : value.loginUserName
+    if (value.isDel && value.type == 'employee') {
+      this.msg.warning(`${name}已被删除,无法选择`)
+      return
+    }
     this.addSelectedPersonList(
+      value,
       value.type,
       value.loginUserId?.toString() ? value.loginUserId?.toString() : value.id?.toString(),
-      value.name,
+      name,
       '',
       value.departmentId,
       value.departmentName,
       value.companyId,
       value.companyName,
       value.thirdPartyAccountUserId,
-      value.org?.map((item:any)=>({
-        label:item.name,
-        value:item.id
+      value.org?.map((item: any) => ({
+        label: item.name,
+        value: item.id
       }))
     );
   }
 
   addSelectedPersonList(
+    addItem: any,
     category: string,
     id: string,
     name: string,
@@ -163,7 +216,7 @@ export class DepartmentComponent extends DepartmentClass implements OnInit, OnDe
     companyId: string,
     companyName: string,
     thirdPartyAccountUserId: variable<string>,
-    orgs:Common[]
+    orgs: Common[]
   ) {
     const person: Person = {
       name: name,
@@ -174,9 +227,11 @@ export class DepartmentComponent extends DepartmentClass implements OnInit, OnDe
       category: category,
       companyId: companyId,
       companyName: companyName,
-      orgs:orgs
+      orgs: orgs,
+      avatar: addItem.avatar,
+      jobNumber: addItem.jobNumber,
+      mobilePhone: addItem.mobilePhone,
     };
-    console.log(this.singleChoice);
     this.singleChoice ? this.selected.clear() : '';
     this.selected.set(id, person);
     this.getSelectedList<Person>(this.selected as Map<string, Person>);
@@ -235,7 +290,9 @@ export class DepartmentComponent extends DepartmentClass implements OnInit, OnDe
   addPerson(node: NzTreeNode): void {
     console.log(node);
     if (this.chooseMode === node.origin['category'] || this.chooseMode === 'department') {
+      (node as any).avatar = node.icon
       this.addSelectedPersonList(
+        node,
         node.origin!['category'],
         node.key,
         node.title,
@@ -245,7 +302,7 @@ export class DepartmentComponent extends DepartmentClass implements OnInit, OnDe
         node.origin['companyId'],
         node.origin['companyName'],
         node.origin['thirdPartyAccountUserId'],
-        [{label: node.parentNode!['title'] , value: node.parentNode!['key']}]
+        [{ label: node.parentNode!['title'], value: node.parentNode!['key'] }]
       );
     }
   }
