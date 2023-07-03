@@ -29,7 +29,7 @@ export class SetupAppPermissionsComponent implements OnInit, OnChanges {
 
   loadAppList() {
     this.selectedApp = {};
-    this.http.get(`//base/service/security/admin/application/list`).subscribe((res) => {
+    this.http.get(`/base/service/security/admin/application/list`).subscribe((res) => {
       if (res.success) {
         this.appList = res.data;
 

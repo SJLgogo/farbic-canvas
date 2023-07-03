@@ -114,6 +114,9 @@ export class SetupDataPermissionsComponent implements OnInit, OnChanges {
       if (res.success) {
         this.msgSrv.success(res.message);
       }
+      else{
+        this.msgSrv.error(res.message);
+      }
     });
   }
 

@@ -48,7 +48,7 @@ export class SetupSynchronizeComponent implements OnInit {
         ui: {
           widget: 'select',
           asyncData: () => {
-            return this.http.get(`//base/service/security/admin/application/list`).pipe(
+            return this.http.get(`/base/service/security/admin/application/list`).pipe(
               map((item) => {
                 const children = item.data.map((element: any) => {
                   return { label: element.name, value: element.id };
