@@ -11,7 +11,6 @@ import { UserLoginComponent } from './login/login.component';
 import { PassportLoginSxComponent } from './login-sx/login-sx.component';
 
 const routes: Routes = [
-  // passport
   {
     path: 'passport',
     component: LayoutPassportComponent,

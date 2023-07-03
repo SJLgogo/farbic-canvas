@@ -86,14 +86,8 @@ export class AppAddComponent implements OnInit {
     }
   };
 
-
-  ngOnInit(): void {
-    console.log(this.i);
-  }
-
-  save(value: SaveApp | any): void {
-    this.saveOperation(value)
-  }
+  ngOnInit(): void {}
+  save(value: SaveApp | any): void {this.saveOperation(value)}
 
   close(): void {
     this.modal.destroy();

@@ -68,6 +68,7 @@ export class AppManagementComponent implements OnInit {
     {title: '公司', index: 'companyName'},
     {title: '访问地址', index: 'url', render: 'renderAppAuthUrl'},
     {title: '应用类型', index: 'category', type: 'enum', enum: {'app': 'app访问', 'web': 'web端访问', 'contact': '通讯录'}},
+    {title: '应用', index: 'companyCategory', type: 'enum', enum: {'wxCp': '企业微信', 'ding': '钉钉', 'yzj': '云之家', 'other': '其他'}},
     {title: '企业微信通讯录secret', index: 'secret'},
     {title: '通讯录token', index: 'messageToken'},
     {title: '通讯录Key', index: 'messageEncodingAesKey'},

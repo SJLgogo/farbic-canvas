@@ -96,21 +96,59 @@ export class SetupSecurityResourceMenuCheckComponent implements OnInit, OnChange
   }
 
   // 表格点击事件
+  // permissionTableChange(e: any): void {
+  //   if (e.type === 'checkbox') {
+  //     //点击一行的数据
+  //     for (const permission of e.checkbox) {
+  //       console.log(permission,'12',this.checkedMenuPermissionMap, this.checkedMenuIds,     this.checkedButtonPermissionIds )
+  //       // if (!this.checkedMenuPermissionMap.has(p.menuId)) {
+  //       //   this.msgSrv.error('请选中该权限所属的菜单!');
+  //       //   this.st.clearCheck();
+  //       //   return;
+  //       // } else {
+  //       //   permissionIds.push(p.permissionId);
+  //       // }
+  //       this.checkedButtonPermissionIds.push(permission.id);
+  //     }
+  //   }
+  // }
+
+
+  // 表格点击事件
   permissionTableChange(e: any): void {
-    if (e.type === 'checkbox') {
-      //点击一行的数据
-      for (const permission of e.checkbox) {
-        // if (!this.checkedMenuPermissionMap.has(p.menuId)) {
-        //   this.msgSrv.error('请选中该权限所属的菜单!');
-        //   this.st.clearCheck();
-        //   return;
-        // } else {
-        //   permissionIds.push(p.permissionId);
-        // }
-        this.checkedButtonPermissionIds.push(permission.id);
-      }
+    console.log(this.defaultCheckedKeys,'数据操作',this.menuNodes ,'checked要为true')
+    // if (e.type === 'checkbox') {
+    //   const permissionIds = [];
+    //   for (const p of e.checkbox) {
+    //     if (!this.checkedMenuPermissionMap.has(p.menuId)) {
+    //       this.msgSrv.error('请选中该权限所属的菜单!');
+    //       this.st.clearCheck();
+    //       return;
+    //     } else {
+    //       permissionIds.push(p.permissionId);
+    //     }
+    //   }
+    //   this.updatePermissionCheck(e.checkbox);
+    //   this.updateCheckIds();
+    // }
+  }
+
+  // 权限-根据已选中权限表格的数据航更新内存数据
+  updatePermissionCheck(checkPermissionRow: any): void {
+    const permissionIdSet = new Set<string>();
+    if (checkPermissionRow.length > 0) {
+      checkPermissionRow.forEach((permissionRow: any) => {
+        permissionIdSet.add(permissionRow.permissionId);
+      });
+      this.checkedMenuPermissionMap.set(checkPermissionRow[0].menuId, permissionIdSet);
     }
   }
+
+
+
+
+
+
 
 
   // 点击树节点
