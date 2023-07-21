@@ -106,7 +106,7 @@ export class StartupService {
    * 登录后调用、正式环境用
    * @private
    */
-  private afterLogin(): Observable<any> {
+  private  afterLogin(): Observable<any> {
     const defaultLang = this.i18n.defaultLang;
     return zip(this.i18n.loadLangData(defaultLang),
       this.httpClient.get('/security/service/security/admin/security-resource/myAlainAppData'),

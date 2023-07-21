@@ -37,6 +37,10 @@
         {
           "text": "菜单管理",
           "link": "/setup/security/resource-menu"
+        },
+        {
+          "text": "权限范围",
+          "link": "/setup/security/purview"
         }
       ]
     },

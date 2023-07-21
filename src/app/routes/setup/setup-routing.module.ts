@@ -21,7 +21,7 @@ import { SetupPostBindUserComponent } from './security/post-permission/post-bind
 import { SetupPostCheckUserTableComponent } from './security/post-permission/post-check-user-table/post-check-user-table.component';
 import { SetupPostBindRoleComponent } from './security/post-permission/post-bind-role/post-bind-role.component';
 import { SetupPostCheckRoleTableComponent } from './security/post-permission/post-check-role-table/post-check-role-table.component';
-
+import {purview} from './purview/purview';
 const routes: Routes = [
   {path: '', redirectTo: 'security/contact', pathMatch: 'full'},
   {path: 'check', component: SetupSecurityResourceMenuCheckComponent},
@@ -43,9 +43,10 @@ const routes: Routes = [
   },
   {path: 'security/contact', component: SetupContactComponent, data: {title: '组织机构', titleI18n: '组织机构'}},
   {path: 'security/account', component: SetupAccountComponent, data: {title: '账号管理', titleI18n: '账号管理'}},
+  {path: 'security/purview', component: purview, data: {title: '权限范围', titleI18n: '权限范围'}},
   {path: 'synchronize', component: SetupSynchronizeComponent, data: {title: '第三方账户同步', titleI18n: '第三方账户同步'}},
   {path: 'user', component: UserManagementComponent, data: {title: '用户管理', titleI18n: '用户管理'}},
-  { path: 'security/post-permission', component: SetupPostPermissionComponent,data: {title: '岗位管理', titleI18n: '岗位管理'} },
+  { path: 'security/post-permission', component: SetupPostPermissionComponent,data: {title: '岗位管理', titleI18n: '岗位管理'},canActivate: ['post-permission' ] },
   { path: 'post-edit', component: SetupPostEditComponent },
   { path: 'post-bind-user', component: SetupPostBindUserComponent },
   { path: 'post-check-user-table', component: SetupPostCheckUserTableComponent },

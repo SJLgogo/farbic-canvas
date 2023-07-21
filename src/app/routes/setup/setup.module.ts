@@ -47,6 +47,7 @@ import { SetupPostCheckUserTableComponent } from './security/post-permission/pos
 import { SetupPostBindRoleComponent } from './security/post-permission/post-bind-role/post-bind-role.component';
 import { SetupPostCheckRoleTableComponent } from './security/post-permission/post-check-role-table/post-check-role-table.component';
 import { DelonACLModule } from '@delon/acl';
+import {purview} from './purview/purview';
 
 const COMPONENTS: Array<Type<void>> = [
   SetupIndexComponent,
@@ -83,7 +84,8 @@ const COMPONENTS: Array<Type<void>> = [
   SetupPostBindUserComponent,
   SetupPostCheckUserTableComponent,
   SetupPostBindRoleComponent,
-  SetupPostCheckRoleTableComponent];
+  SetupPostCheckRoleTableComponent,
+  purview];
 
 @NgModule({
   imports: [

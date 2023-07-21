@@ -67,7 +67,7 @@
         <nz-tabset *ngIf="selectedRole != null" [nzSelectedIndex]="index" (nzSelectChange)="nzSelectChange($event)">
 
           <nz-tab nzTitle="功能权限" >
-            <app-setup-security-resource-menu-check [role]="selectedRole"></app-setup-security-resource-menu-check>
+            <app-setup-security-resource-menu-check [role]="selectedRole" ></app-setup-security-resource-menu-check>
           </nz-tab>
 
           <nz-tab nzTitle="用户授权">

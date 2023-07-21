@@ -28,6 +28,7 @@ export class SetupSecurityRolePermissionComponent implements OnInit {
   permissionUserId: string = '';
   appId: any;
 
+
   //----------------角色树,用于角色继承关系
   ngOnInit() {
     this.loadRoleTree();
@@ -37,9 +38,11 @@ export class SetupSecurityRolePermissionComponent implements OnInit {
 
   //点击加载下级树节点
   roleEvent(event: NzFormatEmitEvent): void {
+    console.log('点击',event);
     const node: any = event.node;
     if (event.eventName === 'click') {
       this.activeRoleNode = node;
+      console.log(this.activeRoleNode,this.index,'123456');
       this.activeRole(this.activeRoleNode, this.index);
       if (this.index == 1) {
         this.permissions.optDataPermission([]);
@@ -179,4 +182,6 @@ export class SetupSecurityRolePermissionComponent implements OnInit {
       this.permissions.optDataPermission(this.permissions.selectedScope);
     }
   }
+
+
 }
