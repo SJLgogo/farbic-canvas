@@ -7,5 +7,8 @@ LABEL remark="."
 COPY nginx.conf.template /etc/nginx/conf.d/default.conf.template
 # 在容器启动时替换占位符
 CMD envsubst "\$gateway_url,\$project_name" < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'
+#CMD envsubst "\$gateway_url,\$project_name" < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf && mv /usr/share/nginx/html/admin /usr/share/nginx/html/$project_name && nginx -g 'daemon off;'
 # 将打包好的项目文件拷贝到容器对应位置
 COPY dist /usr/share/nginx/html/platform-admin
+
+
