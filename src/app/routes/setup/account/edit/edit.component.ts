@@ -18,8 +18,9 @@ export class SetupAccountEditComponent implements OnInit {
   @ViewChild('sf', { static: false }) sf!: SFComponent;
   schema: SFSchema = {
     properties: {
+      account:{ type: 'string', title: '平台账号' },
       mobilePhone: { type: 'string', title: '手机号', format: 'mobile' },
-      thirdPartyName: { type: 'string', title: '姓名' },
+      thirdPartyName: { type: 'string', title: '姓名',readOnly:true },
       password: { type: 'string', title: '密码' }
     },
     required: ['mobilePhone', 'thirdPartyName', 'password']
@@ -53,9 +54,6 @@ export class SetupAccountEditComponent implements OnInit {
     let url = 'register';
     if (this.i.id) {
       url = 'update';
-    }else {
-      //注册的时候默认账号就是手机号
-      value.account = value.mobilePhone;
     }
     this.http.post(`/org/service/organization/admin/account/` + url, value).subscribe((res) => {
       if (res.success) {

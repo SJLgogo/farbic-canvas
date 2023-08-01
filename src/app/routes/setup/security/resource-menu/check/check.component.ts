@@ -2,7 +2,7 @@
 import { ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { STColumn, STComponent, STData } from '@delon/abc/st';
 import { SFSchema } from '@delon/form';
-import { _HttpClient, ModalHelper } from '@delon/theme';
+import { _HttpClient, MenuService, ModalHelper } from '@delon/theme';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { NzFormatEmitEvent, NzTreeComponent, NzTreeNode } from 'ng-zorro-antd/tree';
@@ -83,6 +83,7 @@ export class SetupSecurityResourceMenuCheckComponent implements OnInit, OnChange
     private modal: ModalHelper,
     private msgSrv: NzMessageService,
     private cdr: ChangeDetectorRef,
+    private menuService: MenuService,
     private modalSrv: NzModalService
   ) {
   }
@@ -264,7 +265,6 @@ export class SetupSecurityResourceMenuCheckComponent implements OnInit, OnChange
   saveCheckMenu(): void {
     // 获取半选状态的数据
     const halfChecked = this.roleTreeComponent.getHalfCheckedNodeList();
-
     halfChecked.forEach((value, number) => {
       this.halfCheckedIds.push(value.key);
     });
@@ -287,6 +287,8 @@ export class SetupSecurityResourceMenuCheckComponent implements OnInit, OnChange
     this.http.post(`/security/service/security/admin/authority/role/assign-permissions`, requestParams).subscribe((res) => {
       this.msgSrv.success(res.message);
     });
+
+    console.log(this.menuService);
   }
 
   nzEvent(event: NzFormatEmitEvent): void {

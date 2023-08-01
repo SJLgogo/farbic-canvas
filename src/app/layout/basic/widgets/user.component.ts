@@ -27,6 +27,7 @@ import { CookieService } from '@delon/util';
 <!--          <i nz-icon nzType="close-circle" class="mr-sm"></i>-->
 <!--          {{ 'menu.account.trigger' | i18n }}-->
 <!--        </div>-->
+        <div nz-menu-item>版本:v0.5.1.20230705</div>
         <li nz-menu-divider></li>
         <div nz-menu-item (click)="logout()">
           <i nz-icon nzType="logout" class="mr-sm"></i>
