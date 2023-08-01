@@ -113,7 +113,7 @@ export class VolumeIncreaseComponent implements OnInit, OnChanges {
     this.http.post(`/security/service/security/admin/scopePermission/assignRoleToScope`, params).subscribe((res) => {
       if (res.success) {
         this.msgSrv.success(res.message);
-        this.modals.close(true);
+        // this.modals.close(true);
       } else {
         this.msgSrv.error(res.message);
       }

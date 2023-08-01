@@ -20,10 +20,10 @@ export class SetupAccountEditComponent implements OnInit {
     properties: {
       account:{ type: 'string', title: '平台账号' },
       mobilePhone: { type: 'string', title: '手机号', format: 'mobile' },
-      thirdPartyName: { type: 'string', title: '姓名',readOnly:true },
+      name: { type: 'string', title: '用户名' },
       password: { type: 'string', title: '密码' }
     },
-    required: ['mobilePhone', 'thirdPartyName', 'password']
+    required: ['mobilePhone', 'name', 'password']
   };
   ui: SFUISchema = {
     '*': {
@@ -47,6 +47,12 @@ export class SetupAccountEditComponent implements OnInit {
 
   ngOnInit(): void {
     // if (this.record.id > 0) this.http.get(`/user/${this.record.id}`).subscribe((res) => (this.i = res));
+    console.log(this.i,'11')
+    if(this.i.id){
+      // @ts-ignore
+      this.schema.properties.name.default=this.i.user.name;
+    }
+
   }
 
 
@@ -54,7 +60,19 @@ export class SetupAccountEditComponent implements OnInit {
     let url = 'register';
     if (this.i.id) {
       url = 'update';
+      this.i.user.name=value.name;
+      value=this.i;
     }
+    else{
+      value.mobilePhone=value.mobilePhone.trim();
+      value.name=value.name.trim();
+      value.user={
+        name:value.name,
+        mobilePhone: value.mobilePhone,
+      }
+    }
+    value.account=value.account.trim();
+
     this.http.post(`/org/service/organization/admin/account/` + url, value).subscribe((res) => {
       if (res.success) {
         this.msgSrv.success('保存成功');

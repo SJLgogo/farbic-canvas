@@ -101,14 +101,15 @@ export class SetupUserPermissionComponent implements AfterViewInit, OnChanges {
    * 批量增减操作 BatchIncreaseConfigurationComponent
    */
   batchIncrease(){
+    console.log(this.role.id,'this.role.id-this.role.id')
     this.modal
       .createStatic(BatchIncreaseConfigurationComponent, {
         i: {roleId: this.role.id},
         mode: 'add',
-      }, { size: 1400 })
+      }, { size: 1800 })
       .subscribe(() => {
-        this.st.req.body = {roleId: this.role.id}; // 给body赋值
-        this.st.reload();
+        // this.st.req.body = {roleId: this.role.id}; // 给body赋值
+        // this.st.reload();
       });
   }
 

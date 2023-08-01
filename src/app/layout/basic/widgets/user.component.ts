@@ -31,7 +31,7 @@ import { CookieService } from '@delon/util';
         <li nz-menu-divider></li>
         <div nz-menu-item (click)="logout()">
           <i nz-icon nzType="logout" class="mr-sm"></i>
-          {{ 'menu.account.logout' | i18n }}
+          {{ '退出登录' | i18n }}
         </div>
       </div>
     </nz-dropdown-menu>

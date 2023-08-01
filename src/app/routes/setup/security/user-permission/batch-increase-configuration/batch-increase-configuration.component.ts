@@ -10,12 +10,11 @@ import {
   ViewChild
 } from '@angular/core';
 import {STClickRowClassNameType, STColumn, STComponent, STData} from '@delon/abc/st';
-import {SFComponent, SFSchema} from '@delon/form';
 import {_HttpClient, ModalHelper, SettingsService} from '@delon/theme';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {NzModalRef, NzModalService} from 'ng-zorro-antd/modal';
-
-
+import {SFComponent, SFSchema, SFSchemaEnumType, SFSelectWidgetSchema, SFUISchema} from '@delon/form';
+import {map} from 'rxjs';
 @Component({
   selector: 'app-batch-increase-configuration-component',
   templateUrl: './batch-increase-configuration.component.html',
@@ -38,6 +37,19 @@ export class BatchIncreaseConfigurationComponent implements AfterViewInit, OnCha
       name: {
         type: 'string',
         title: '用户名称',
+        ui: {
+          placeholder: '--请输入用户名称--',
+        }
+      },
+      companyId: {
+        type: 'string',
+        title: '公司名称',
+        ui: {
+          width:300,
+          placeholder: '--请选择--',
+          widget: 'select',
+          asyncData: () => this.stationAreaIds(),
+        }as SFSelectWidgetSchema
       },
     },
   };
@@ -65,6 +77,8 @@ export class BatchIncreaseConfigurationComponent implements AfterViewInit, OnCha
   ngAfterViewInit(): void {
     // @ts-ignore
     this.increase.role = {id: this['i']['roleId']};
+    // @ts-ignore
+    this.st.reload({roleId: this['i']['roleId']});
   }
 
   searchName() {
@@ -77,12 +91,23 @@ export class BatchIncreaseConfigurationComponent implements AfterViewInit, OnCha
    * 清空查询
    */
   reset() {
+    this.increase.checkedButtonAll=[];
+    this.checkedButtonPermissionIds=[];
     this.sf.reset();
     this.sf.refreshSchema();
+    // @ts-ignore
+    this.st.reload({roleId: this['i']['roleId']});
+  }
+
+  search(value:any):void{
+    this.increase.checkedButtonAll=[];
+    this.checkedButtonPermissionIds=[];
+    // @ts-ignore
+    this.st.reload({roleId: this['i']['roleId'],name:value.name,companyId:value.companyId});
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.reloadTable();
+    // this.reloadTable();
   }
 
   /**
@@ -114,7 +139,7 @@ export class BatchIncreaseConfigurationComponent implements AfterViewInit, OnCha
       //点击一行的数据
       for (const permission of e.checkbox) {
         console.log(permission,'SWQAD');
-        this.checkedButtonPermissionIds.push(permission.id);
+        this.checkedButtonPermissionIds.push(permission.user.id);
       }
       repetition = Array.from(new Set(this.checkedButtonPermissionIds));
       this.increase.checkedButtonAll = repetition;
@@ -122,5 +147,20 @@ export class BatchIncreaseConfigurationComponent implements AfterViewInit, OnCha
 
   }
 
+  stationAreaIds(): any {
+    return this.http.get(`/org/service/organization/admin/organization/tree/child/root`).pipe(
+      map((resp: any) => {
+        const arr: [] = [];
+        const list = resp.data;
+        if (list && list.length) {
+          list.forEach((element: any) => {
+            // @ts-ignore
+            arr.push({label: element.companyName, value: element.companyId});
+          });
+        }
+        return arr;
+      }),
+    );
+  }
 
 }

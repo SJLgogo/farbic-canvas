@@ -3,9 +3,10 @@
   </ng-template>
 </page-header>
 <nz-card>
-  <div>
-    <button  nz-button nzType="primary" >添加人员</button>
-  </div>
+<!--  <div>-->
+<!--    <button  nz-button nzType="primary" >添加人员</button>-->
+<!--  </div>-->
+  <sf mode='search' [schema]='searchSchema' (formSubmit)='st.reset($event)' (formReset)='st.reset($event)'></sf>
   <st #st [data]="url" [columns]="columns"></st>
 </nz-card>
 

@@ -5,6 +5,7 @@ import { STColumn, STComponent } from '@delon/abc/st';
 import { SetupAccountEditComponent } from './edit/edit.component';
 import { SetupSynchronizeComponent } from './synchronize/synchronize.component';
 import { ACLService } from '@delon/acl';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-setup-account',
@@ -24,7 +25,8 @@ export class SetupAccountComponent implements OnInit {
   @ViewChild('st', { static: false }) st!: STComponent;
   columns: STColumn[] = [
     { title: '平台账号', index: 'account' },
-    { title: '用户名称', index: 'thirdPartyName' },
+    { title: '第三方名称', index: 'thirdPartyName' },
+    { title: '用户名', index: 'user.name' },
     { title: '手机号', index: 'mobilePhone' },
     { title: '用户所属公司', index: 'companyName' },
     {
@@ -34,8 +36,10 @@ export class SetupAccountComponent implements OnInit {
         { text: '编辑', type: 'static', icon: 'edit', click: (item: any) => this.updatePageElementResource(item) },
         //新增一个带有权限的删除按钮
         {
-          text: '删除', type: 'del', icon: 'delete', acl: { ability: ['add_examine'] }
-        },
+          text: '删除', type: 'del', icon: 'delete', acl: { ability: ['add_examine']},
+            click: (item: any) => this.del(item)
+
+          }
         // {
         //   text: '删除-role', type: 'del', icon: 'delete', acl: { role: ['admin'] }
         // }
@@ -47,7 +51,7 @@ export class SetupAccountComponent implements OnInit {
     // this.acl.setAbility(['add_examine']);
   }
 
-  constructor(private http: _HttpClient, private modal: ModalHelper, public acl: ACLService) {
+  constructor(private http: _HttpClient, private modal: ModalHelper, public acl: ACLService, public msg: NzMessageService) {
   }
 
   updatePageElementResource(item: any) {
@@ -77,4 +81,17 @@ export class SetupAccountComponent implements OnInit {
   add() {
     this.modal.createStatic(SetupAccountEditComponent, { i: { id: 0 }, mode: 'add' }).subscribe(() => this.st.reload());
   }
+
+  del(item: any) {
+    this.http.delete(`/org/service/organization/admin/account/delete/${item.id}`).subscribe((res) => {
+        if (res.success) {
+          this.msg.success(`删除成功`);
+          this.st.reload();
+        } else {
+          this.msg.success(`${res.message}`);
+        }
+      }
+    );
+  }
 }
+

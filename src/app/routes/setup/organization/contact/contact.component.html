@@ -13,14 +13,15 @@
         <input type="text" nz-input [(ngModel)]="searchValue" (change)="globalSearch()"
           placeholder="搜索组织、成员、岗位、职务、标签" />
       </nz-input-group>
-      <ng-template #suffixIconSearch>
+      <ng-template #suffixIconSearch >
         <i nz-icon nzType="search"></i>
       </ng-template>
+
 
       <nz-tabset (nzSelectedIndexChange)="activeTab($event)" [nzSize]="'small'" *ngIf="!showSearchResult">
         <nz-tab nzTitle="组织">
           <nz-tree [nzData]="orgNodes" [nzAsyncData]="'true'" (nzExpandChange)="orgEvent($event)" nzExpandAll="true"
-            (nzClick)="orgEvent($event)" (nzDblClick)="orgEvent($event)" [nzTreeTemplate]="nzTreeTemplate"></nz-tree>
+            (nzClick)="orgEvent($event)" (nzDblClick)="orgEvent($event)"    [nzTreeTemplate]="nzTreeTemplate"></nz-tree>
 
           <ng-template #nzTreeTemplate let-node>
             <span class="custom-node" [class.active]="activedOrgNode?.key === node.key">
