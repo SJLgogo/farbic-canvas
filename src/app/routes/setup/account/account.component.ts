@@ -33,9 +33,9 @@ export class SetupAccountComponent implements OnInit {
         // { text: '查看', click: (item: any) => `/form/${item.id}` },
         { text: '编辑', type: 'static', icon: 'edit', click: (item: any) => this.updatePageElementResource(item) },
         //新增一个带有权限的删除按钮
-        // {
-        //   text: '删除', type: 'del', icon: 'delete', acl: { ability: ['add_examine'] }
-        // },
+        {
+          text: '删除', type: 'del', icon: 'delete', acl: { ability: ['add_examine'] }
+        },
         // {
         //   text: '删除-role', type: 'del', icon: 'delete', acl: { role: ['admin'] }
         // }
@@ -44,7 +44,7 @@ export class SetupAccountComponent implements OnInit {
   ];
 
   ngOnInit() {
-    this.acl.setAbility(['add_examine']);
+    // this.acl.setAbility(['add_examine']);
   }
 
   constructor(private http: _HttpClient, private modal: ModalHelper, public acl: ACLService) {
@@ -53,8 +53,6 @@ export class SetupAccountComponent implements OnInit {
   updatePageElementResource(item: any) {
     this.modal.createStatic(SetupAccountEditComponent, { i: item }, { size: 'md' }).subscribe(() => this.st.reload());
   }
-
-  // /service/security/admin/userThirdPartyApi
 
   close() {
     // this.modalRef.destroy();
