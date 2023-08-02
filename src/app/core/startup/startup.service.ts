@@ -106,10 +106,14 @@ export class StartupService {
    * 登录后调用、正式环境用
    * @private
    */
-  private  afterLogin(): Observable<any> {
+  /**
+   * 登录后调用、正式环境用
+   * @private
+   */
+  private afterLogin(): Observable<any> {
     const defaultLang = this.i18n.defaultLang;
     return zip(this.i18n.loadLangData(defaultLang),
-      this.httpClient.get('/security/service/security/admin/security-resource/myAlainAppData'),
+      this.httpClient.get('/security/service/security/admin/security-resource/myAlainAppDataNew'),
       this.httpClient.get(`/service/dictionary/dict-data/find-all`)
     ).pipe(
       // 接收其他拦截器后产生的异常消息
@@ -128,8 +132,22 @@ export class StartupService {
           this.settingService.setApp(appData.app);
           // 用户信息：包括姓名、头像、邮箱地址
           this.settingService.setUser(appData.user);
-          // ACL：设置权限为全量
-          this.aclService.setFull(true);
+
+          //先判断user对象是否有roleCodes字段
+          if(appData.user.roleCodes){
+            // ACL：设置权限
+            this.aclService.attachRole(appData.user.roleCodes);
+          }
+
+          const buttonPermissionDTOS = appData.buttonPermissionDTOS;
+          let identifiers = [];
+          if (buttonPermissionDTOS && Array.isArray(buttonPermissionDTOS) && buttonPermissionDTOS.length > 0) {
+            identifiers = buttonPermissionDTOS.map((item: any) => item.identifier);
+          }
+          // console.log("identifiers:",identifiers);
+          this.aclService.attachAbility(identifiers);
+
+          // this.aclService.setFull(true);
           // 初始化菜单
           this.menuService.add(appData.menu);
           // 设置页面标题的后缀
@@ -141,6 +159,7 @@ export class StartupService {
       })
     );
   }
+
 
 
 }
