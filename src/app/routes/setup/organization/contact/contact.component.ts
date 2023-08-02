@@ -114,7 +114,7 @@ export class SetupContactComponent implements OnInit {
   globalSearch() {
     const params = {
       searchValue: this.searchValue,
-      mode: ['organization', 'job', 'post', 'tag']
+      mode: ["org"]
     };
     if (this.searchValue === '' || this.searchValue === 'undefined') {
       this.showSearchResult = false;

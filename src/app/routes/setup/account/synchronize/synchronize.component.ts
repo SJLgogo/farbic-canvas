@@ -48,7 +48,7 @@ export class SetupSynchronizeComponent implements OnInit {
         ui: {
           widget: 'select',
           asyncData: () => {
-            return this.http.get(`/base/service/security/admin/application/list`).pipe(
+            return this.http.post(`/base/api/agent/app/find-all`,{ category: 'contact' }).pipe(
               map((item) => {
                 const children = item.data.map((element: any) => {
                   return { label: element.name, value: element.id };
@@ -66,7 +66,6 @@ export class SetupSynchronizeComponent implements OnInit {
           }
         } as SFSelectWidgetSchema
       }
-
       // attendanceGroupEmployeeSelect: {
       //   type: 'string',
       //   title: '',
@@ -109,7 +108,7 @@ export class SetupSynchronizeComponent implements OnInit {
 
   save(value: any) {
     this.http
-      .get(`//base/service/security/admin/userThirdPartyApi/synchronizeThirdPartyAccountWeb/` + value.applicationId, value)
+      .post(`/org/api/wxcp/task/fullUpdate`,{id:value.applicationId} )
       .subscribe((res) => {
         this.msgSrv.success('同步成功');
         this.modalRef.close(true);

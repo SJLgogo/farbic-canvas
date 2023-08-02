@@ -16,31 +16,59 @@
       "children": [
         {
           "text": "组织机构",
-          "link": "/setup/security/contact"
+          "link": "/setup/security/contact",
+          "icon": {
+            "type": "img",
+            "value": "assets/icon/icon2.png"
+          }
         },
         {
           "text": "账户管理",
-          "link": "/setup/security/account"
+          "link": "/setup/security/account",
+          "icon": {
+            "type": "img",
+            "value": "assets/icon/icon3.png"
+          }
         },
         {
           "text": "角色授权",
-          "link": "/setup/security/role-permission"
+          "link": "/setup/security/role-permission",
+          "icon": {
+            "type": "img",
+            "value": "assets/icon/icon4.png"
+          }
         },
         {
           "text": "岗位授权",
-          "link": "/setup/security/post-permission"
+          "link": "/setup/security/post-permission",
+          "icon": {
+            "type": "img",
+            "value": "assets/icon/icon1.png"
+          }
         },
         {
           "text": "用户管理",
-          "link": "/setup/user"
+          "link": "/setup/user",
+          "icon": {
+            "type": "img",
+            "value": "assets/icon/icon5.png"
+          }
         },
         {
           "text": "菜单管理",
-          "link": "/setup/security/resource-menu"
+          "link": "/setup/security/resource-menu",
+          "icon": {
+            "type": "img",
+            "value": "assets/icon/icon6.png"
+          }
         },
         {
           "text": "权限范围",
-          "link": "/setup/security/purview"
+          "link": "/setup/security/purview",
+          "icon": {
+            "type": "img",
+            "value": "assets/icon/icon7.png"
+          }
         }
       ]
     },
