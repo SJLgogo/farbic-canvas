@@ -48,7 +48,7 @@ export class SetupPostCheckRoleTableComponent implements OnInit,AfterViewInit {
           width: 300,
           placeHolder: '请输入', widget: 'select',
           asyncData: () => {
-            return this.http.get(`/base/api/agent/app/find-all`).pipe(
+            return this.http.post(`/base/api/agent/app/find-all`,{}).pipe(
               map((item) => {
                 const children = item.data.map((element: any) => {
                   return { label: element.name, value: element.id };

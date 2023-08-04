@@ -4,7 +4,8 @@
     <button (click)="reset()" type="button" nz-button>重置</button>
     <button (click)="addUserPost()" nz-button nzType="primary">授权角色</button>
   </sf>
-  <st #st [data]="url"  [scroll]="{ x: '1300px' }" [columns]="columns"   (change)="clickContent($event)"  [clickRowClassName]="clickRowClassName">
+<!--  [clickRowClassName]="clickRowClassName"-->
+  <st #st [data]="url"  [scroll]="{ x: '1300px' }" [columns]="columns"   (change)="clickContent($event)"  >
   </st>
 </div>
 

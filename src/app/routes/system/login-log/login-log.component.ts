@@ -11,9 +11,9 @@ export class SystemLoginLogComponent implements OnInit {
   url = `/service/system/system-login-log/page-all`;
   searchSchema: SFSchema = {
     properties: {
-      no: {
+      userName: {
         type: 'string',
-        title: '编号'
+        title: '用户名'
       }
     }
   };

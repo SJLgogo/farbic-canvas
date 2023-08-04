@@ -22,27 +22,27 @@ export class SystemRoutesComponent implements OnInit {
     properties: {
       param: {
         type: 'string',
-        title: '查询参数',
+        title: '服务id',
         ui: {
           width: 300,
           placeholder: '请输入serviceId或者备注'
         }
       },
-      dict: {
-        type: 'object',
-        properties: {
-          name: {
-            type: 'string',
-            title: '字典数据',
-            ui: {
-              placeholder: '请选择请假类型',
-              widget: 'dict',
-              typeValue: 'system_education',
-              loadingTip: 'loading...'
-            }
-          }
-        }
-      }
+      // dict: {
+      //   type: 'object',
+      //   properties: {
+      //     name: {
+      //       type: 'string',
+      //       title: '字典数据',
+      //       ui: {
+      //         placeholder: '请选择请假类型',
+      //         widget: 'dict',
+      //         typeValue: 'system_education',
+      //         loadingTip: 'loading...'
+      //       }
+      //     }
+      //   }
+      // }
     }
   };
   @ViewChild('st') private readonly st!: STComponent;

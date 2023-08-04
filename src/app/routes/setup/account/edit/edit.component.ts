@@ -61,6 +61,7 @@ export class SetupAccountEditComponent implements OnInit {
     if (this.i.id) {
       url = 'update';
       this.i.user.name=value.name;
+      this.i.user.mobilePhone=value.mobilePhone;
       value=this.i;
     }
     else{
@@ -72,7 +73,6 @@ export class SetupAccountEditComponent implements OnInit {
       }
     }
     value.account=value.account.trim();
-
     this.http.post(`/org/service/organization/admin/account/` + url, value).subscribe((res) => {
       if (res.success) {
         this.msgSrv.success('保存成功');

@@ -27,7 +27,8 @@ export class SetupAccountComponent implements OnInit {
     { title: '平台账号', index: 'account' },
     { title: '第三方名称', index: 'thirdPartyName' },
     { title: '用户名', index: 'user.name' },
-    { title: '手机号', index: 'mobilePhone' },
+    { title: '手机号', index: 'user.mobilePhone' },
+    { title: '登录账号', index: 'mobilePhone' },
     { title: '用户所属公司', index: 'companyName' },
     {
       title: '',

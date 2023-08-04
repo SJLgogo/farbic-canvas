@@ -54,12 +54,12 @@ export class AppManagementComponent implements OnInit {
             this.deleteProHttp(e.id)
           },
         },
-        {
-          text: `应用列表`,
-        },
-        {
-          text: `管理员账号`,
-        },
+        // {
+        //   text: `应用列表`,
+        // },
+        // {
+        //   text: `管理员账号`,
+        // },
       ],
     },
   ];

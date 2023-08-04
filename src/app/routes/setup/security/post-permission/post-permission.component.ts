@@ -113,6 +113,7 @@ export class SetupPostPermissionComponent implements OnInit {
             if (res.success) {
               this.messageService.success('删除成功');
               this.loadRoleTree();
+              this.selectedPost=null;
             } else {
               this.messageService.error('删除失败 : ' + res.message);
             }
@@ -168,7 +169,7 @@ export class SetupPostPermissionComponent implements OnInit {
     private modalSrv: NzModalService,
     private cdr: ChangeDetectorRef,
     private router: Router,
-    private permissionService: PermissionService
+    private permissionService: PermissionService,
   ) {
   }
 

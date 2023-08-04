@@ -12,5 +12,6 @@ export class ExceptionComponent {
     return this.route.snapshot.data['type'];
   }
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute) {
+  }
 }

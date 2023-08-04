@@ -53,9 +53,19 @@ export class SetupContactComponent implements OnInit {
   @ViewChild('st', { static: false }) st!: STComponent;
   columns: STColumn[] = [
     // { title: '头像', type: 'img', width: 60, index: 'wxAvatar', fixed: 'left' },
+    { title: '平台账号', index: 'account' },
     { title: '公司', index: 'companyName', fixed: 'left' },
     { title: '用户名', index: 'thirdPartyName', fixed: 'left' },
-    { title: '账号', index: 'mobilePhone', fixed: 'left' },
+    { title: '手机号', index: 'mobilePhone', fixed: 'left' },
+
+
+
+    // { title: '平台账号', index: 'account' },
+    // { title: '第三方名称', index: 'thirdPartyName' },
+    // { title: '用户名', index: 'user.name' },
+    // { title: '手机号', index: 'user.mobilePhone' },
+
+
     {
       title: '来源',
       index: 'scene',

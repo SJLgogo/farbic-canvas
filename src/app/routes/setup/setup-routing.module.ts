@@ -46,7 +46,7 @@ const routes: Routes = [
   {path: 'security/purview', component: purview, data: {title: '权限范围', titleI18n: '权限范围'}},
   {path: 'synchronize', component: SetupSynchronizeComponent, data: {title: '第三方账户同步', titleI18n: '第三方账户同步'}},
   {path: 'user', component: UserManagementComponent, data: {title: '用户管理', titleI18n: '用户管理'}},
-  { path: 'security/post-permission', component: SetupPostPermissionComponent,data: {title: '岗位管理', titleI18n: '岗位管理'},canActivate: ['post-permission' ] },
+  { path: 'security/post-permission', component: SetupPostPermissionComponent,data: {title: '岗位管理', titleI18n: '岗位管理'}},
   { path: 'post-edit', component: SetupPostEditComponent },
   { path: 'post-bind-user', component: SetupPostBindUserComponent },
   { path: 'post-check-user-table', component: SetupPostCheckUserTableComponent },
