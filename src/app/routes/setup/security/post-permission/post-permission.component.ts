@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { _HttpClient, ModalHelper } from '@delon/theme';
 import { NzFormatEmitEvent, NzTreeNode } from 'ng-zorro-antd/core/tree';
 import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
@@ -33,10 +33,11 @@ export class SetupPostPermissionComponent implements OnInit {
   @ViewChild('permissions') permissions: any;
   permissionUserId: string = '';
   appId: any;
-
+  rollElement: any;
   //----------------岗位树,用于岗位继承关系
   ngOnInit() {
     console.log('SetupPostPermissionComponent initialized');
+    console.log(this.rollElement,'1234567890');
     this.loadRoleTree();
     this.index = 0;
     this.cdr.detectChanges(); // 在这里添加更改检测的调用
@@ -170,7 +171,14 @@ export class SetupPostPermissionComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private router: Router,
     private permissionService: PermissionService,
+    private elementRef: ElementRef
   ) {
+
   }
+
+
+
+
+
 
 }

@@ -19,8 +19,8 @@ export class SetupAccountEditComponent implements OnInit {
   schema: SFSchema = {
     properties: {
       account:{ type: 'string', title: '平台账号' },
-      mobilePhone: { type: 'string', title: '手机号', format: 'mobile' },
-      name: { type: 'string', title: '用户名' },
+      mobilePhone: { type: 'string', title: '平台手机号', format: 'mobile' },
+      thirdPartyName: { type: 'string', title: '第三方名称' },
       password: { type: 'string', title: '密码' }
     },
     required: ['mobilePhone', 'name', 'password']
@@ -47,32 +47,21 @@ export class SetupAccountEditComponent implements OnInit {
 
   ngOnInit(): void {
     // if (this.record.id > 0) this.http.get(`/user/${this.record.id}`).subscribe((res) => (this.i = res));
-    console.log(this.i,'11')
-    if(this.i.id){
-      // @ts-ignore
-      this.schema.properties.name.default=this.i.user.name;
-    }
-
   }
 
 
   save(value: any): void {
     let url = 'register';
+    value.account=value.account.trim();
+    value.mobilePhone=value.mobilePhone.trim();
+    value.thirdPartyName=value.thirdPartyName.trim();
+    value.password=value.password.trim();
     if (this.i.id) {
       url = 'update';
-      this.i.user.name=value.name;
-      this.i.user.mobilePhone=value.mobilePhone;
-      value=this.i;
+    }else {
+      value.user = {['mobilePhone']: value.mobilePhone.trim(),name:value.thirdPartyName};
     }
-    else{
-      value.mobilePhone=value.mobilePhone.trim();
-      value.name=value.name.trim();
-      value.user={
-        name:value.name,
-        mobilePhone: value.mobilePhone,
-      }
-    }
-    value.account=value.account.trim();
+     console.log(value,"value");
     this.http.post(`/org/service/organization/admin/account/` + url, value).subscribe((res) => {
       if (res.success) {
         this.msgSrv.success('保存成功');
@@ -82,6 +71,23 @@ export class SetupAccountEditComponent implements OnInit {
       }
     });
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   selectUser(): void {
     console.log(this.mode);

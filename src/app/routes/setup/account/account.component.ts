@@ -6,6 +6,7 @@ import { SetupAccountEditComponent } from './edit/edit.component';
 import { SetupSynchronizeComponent } from './synchronize/synchronize.component';
 import { ACLService } from '@delon/acl';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import {Modify} from './modify/modify';
 
 @Component({
   selector: 'app-setup-account',
@@ -26,9 +27,8 @@ export class SetupAccountComponent implements OnInit {
   columns: STColumn[] = [
     { title: '平台账号', index: 'account' },
     { title: '第三方名称', index: 'thirdPartyName' },
+    { title: '平台手机号', index: 'mobilePhone' },
     { title: '用户名', index: 'user.name' },
-    { title: '手机号', index: 'user.mobilePhone' },
-    { title: '登录账号', index: 'mobilePhone' },
     { title: '用户所属公司', index: 'companyName' },
     {
       title: '',
@@ -56,7 +56,7 @@ export class SetupAccountComponent implements OnInit {
   }
 
   updatePageElementResource(item: any) {
-    this.modal.createStatic(SetupAccountEditComponent, { i: item }, { size: 'md' }).subscribe(() => this.st.reload());
+    this.modal.createStatic(Modify, { i: item }, { size: 'md' }).subscribe(() => this.st.reload());
   }
 
   close() {
