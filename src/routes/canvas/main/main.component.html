@@ -1,0 +1,40 @@
+<div class="main">
+
+    <div class="shape">
+
+        <div class="item">
+            <p>基础元素</p>
+            <div class="eles">
+                <div (click)="setMode(item.mode)" class="ele" *ngFor="let item of BaseEles" [ngClass]="item.mode == this.canvasEditor.canvasEvent.currentMode ? 'selected' : ''">
+                    <img [src]="item.iconSrc" />
+                </div>
+            </div>
+        </div>
+
+        <div class="item">
+            <p>形状</p>
+            <div class="eles">
+                <div  draggable="true" (dragstart)="setMode(item.mode)"class="ele" *ngFor="let item of DragEles" [ngClass]="item.mode == this.canvasEditor.canvasEvent.currentMode ? 'selected' : ''">
+                    <img [src]="item.iconSrc" />
+                </div>
+            </div>
+        </div>
+        
+        <!-- <button draggable="true" (dragstart)="onDragstart('line')">线条</button>
+        <button draggable="true" (dragstart)="onDragstart('text')">文本</button>
+        <button draggable="true" (dragstart)="onDragstart('rect')">方形</button>
+        <button (click)="custom()">画笔</button>
+        <button (click)="setDrawType('line')">描点连线</button>
+        <button *ngIf="canvasEditor.getActiveObject()" (click)="del()">删除</button> -->
+
+    </div>
+
+
+    <div class="canvasContainer">
+        <canvas id="canvas" class="canvas"></canvas>
+    </div>
+
+
+
+
+</div>
