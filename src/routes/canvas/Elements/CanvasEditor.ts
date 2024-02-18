@@ -3,6 +3,7 @@ import { CanvasEvent, DragType } from './CanvasEvent';
 import { Mode } from './Shape';
 import { RenderAuto } from './RenderAuto';
 import { BaseDataService } from '../Base/base.data.service';
+import { RenderAuto2 } from './RenderAuto2';
 
 export class canvasEditor {
 
@@ -10,7 +11,7 @@ export class canvasEditor {
 
     declare canvasEvent:CanvasEvent
 
-    declare renderAuto:RenderAuto
+    declare renderAuto:RenderAuto2
 
     declare baseDataService:BaseDataService;
 
@@ -25,10 +26,12 @@ export class canvasEditor {
             canvas: this.canvas 
         })
 
-        this.renderAuto = new RenderAuto({
+        this.renderAuto = new RenderAuto2({
             canvas: this.canvas ,
             baseDataService:config.baseDataService
         })
+
+   
    
     }
 

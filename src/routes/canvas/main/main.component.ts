@@ -42,7 +42,6 @@ export class MainComponent implements OnInit {
       baseDataService:this.baseDataService
     }
     this.canvasEditor = new canvasEditor(config)
-    console.log(this.baseDataService.get());
   }
 
   async renderSvg(){
