@@ -4,73 +4,99 @@ import { Mode } from './Shape';
 import { RenderAuto } from './RenderAuto';
 import { BaseDataService } from '../Base/base.data.service';
 import { RenderAuto2 } from './RenderAuto2';
+import { tapable } from '../utils/Tapable';
 
 export class canvasEditor {
 
     canvas: any;
 
-    declare canvasEvent:CanvasEvent
+    declare canvasEvent: CanvasEvent
 
-    declare renderAuto:RenderAuto2
+    declare renderAuto: RenderAuto2
 
-    declare baseDataService:BaseDataService;
+    declare baseDataService: BaseDataService;
+
+    declare selectedKlass: any;  // 单选中的元素
 
 
-    constructor(config: Config ) {
+    constructor(config: Config) {
         canvaProps.width = config.width
         canvaProps.height = config.height
 
-        this.canvas = new fabric.Canvas(config.elementId , canvaProps);
+        this.canvas = new fabric.Canvas(config.elementId, canvaProps);
 
         this.canvasEvent = new CanvasEvent({
-            canvas: this.canvas 
+            canvas: this.canvas
         })
 
         this.renderAuto = new RenderAuto2({
-            canvas: this.canvas ,
-            baseDataService:config.baseDataService
+            canvas: this.canvas,
+            baseDataService: config.baseDataService
         })
 
-   
-   
+        this.initHooks()
     }
 
-    clear():void{
+    /**
+     * 注册事件hooks
+    */
+    initHooks(): void {
+        tapable._hooks.canvasSelectHook.tap('画布元素单选' ,(e:any)=>this.setSelectedKlass(e))
+    }
+
+    setSelectedKlass(e:any):void{
+        this.selectedKlass = e
+        console.log(this.selectedKlass);
+    }
+
+
+    clear(): void {
         this.canvas.clear()
     }
 
-    getActiveObject():any{
+    getActiveObject(): any {
         return this.canvas.getActiveObject()
     }
 
-    removeActiceObject():void{
-        if(this.getActiveObject()._objects){
+    removeActiceObject(): void {
+        if (this.getActiveObject()._objects) {
             const activeObjects = this.canvas.getActiveObjects();
-            activeObjects.forEach((obj:any)=>{
+            activeObjects.forEach((obj: any) => {
                 this.canvas.remove(obj);
             })
             this.canvas.discardActiveObject();
-        }else{
+        } else {
             this.canvas.remove(this.getActiveObject());
         }
-        this.canvas.renderAll(); 
+        this.canvas.renderAll();
     }
 
 
-    setDragType(type:DragType):void{
+    setDragType(type: DragType): void {
         this.canvasEvent.setDragType(type)
     }
 
 
-    setDrawingMode(boolean:Boolean):void{
+    setDrawingMode(boolean: Boolean): void {
         this.canvas.isDrawingMode = boolean
     }
 
-    setCurrentMode(mode:Mode):void{
+    setCurrentMode(mode: Mode): void {
         this.canvasEvent.setCurrentMode(mode)
     }
 
 
+    hasOneSelect(): boolean {
+        if (this.getActiveObject()?._objects) {
+            return false
+        }
+
+        if (this.getActiveObject()) {
+            return true
+        }
+
+        return false
+    }
 
 }
 
@@ -78,15 +104,15 @@ interface Config {
     width: number,
     height: number,
     elementId: string,
-    baseDataService:BaseDataService
+    baseDataService: BaseDataService
 }
 
 const canvaProps = {
-    width: 0, 
+    width: 0,
     height: 0,
-    isDrawingMode:false, // 画线模式
-    selection:true,  // 元素选择
-    backgroundColor:'white'
+    isDrawingMode: false, // 画线模式
+    selection: true,  // 元素选择
+    backgroundColor: 'white'
 };
 
 

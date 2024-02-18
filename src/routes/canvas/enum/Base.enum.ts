@@ -4,7 +4,7 @@ export enum Line {
 
 
 export enum AREA_INFO {
-    width = 200 ,
+    width = 300 ,
     height = 100
 }
 

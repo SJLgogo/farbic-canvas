@@ -66,4 +66,5 @@ export class MainComponent implements OnInit {
   setMode(mode:Mode):void{
     this.canvasEditor.setCurrentMode(mode)
   }
+  
 }

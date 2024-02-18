@@ -3,6 +3,7 @@ import { Line, AREA_INFO, STATION_INFO } from "../enum/Base.enum";
 import { CreateShape } from "../utils/CreateShape";
 import { fabric } from 'fabric';
 
+
 export class RenderAuto2 extends CreateShape {
 
     baseData: any;
@@ -28,8 +29,8 @@ export class RenderAuto2 extends CreateShape {
     }
 
     drawArea(stations:any):void{
-        for(let i =0;i<stations.length;i++){
-            let top = (this.stationY - AREA_INFO.height) * this.baseDataService.getStationInRow(i)
+        for(let i = 0;i<stations.length;i++){
+            let top = (this.stationY - (AREA_INFO.height / 2 )) * this.baseDataService.getStationInRow(i)
             let left = AREA_INFO.width * this.baseDataService.getStationInRowIdx(i)
             this.drawUpLine({
                 left:left ,
@@ -44,6 +45,11 @@ export class RenderAuto2 extends CreateShape {
             this.drawStation({
                 left:left ,
                 top:top ,
+            })
+            this.drawText({
+                left:left ,
+                top:top ,
+                name:stations[i].stationName
             })
         }
     }
@@ -84,5 +90,30 @@ export class RenderAuto2 extends CreateShape {
         const rect = new fabric.Rect(props)
         this.canvas.add(rect)
     }
+
+
+    drawText(config:any):void{
+        const text = new fabric.IText(config.name, {
+            left:config.left + (AREA_INFO.width/2 - STATION_INFO.width/2),
+            top: config.top - (STATION_INFO.height * 2) ,
+            fontFamily: 'Arial',
+            fontSize: 16,
+            fill: 'black'
+        });
+        this.canvas.add(text)
+        // fabric.util.animate({
+        //     startValue: { left: text.left, top: text.top },
+        //     endValue: { left: 200, top: 200 },
+        //     duration: 1000, 
+        //     onChange: (value)=> {
+        //       this.canvas.renderAll();
+        //     },
+        //     onComplete: function() {
+        //       console.log('Animation completed');
+        //     },
+        //     easing: fabric.util.ease.easeOutExpo 
+        // });
+    }
+
 
 }

@@ -56,18 +56,24 @@ export class BaseDataService {
             }
         }
 
-        console.log(cutNum);
-
 
         return Math.floor(this.basicData.canvasHeight / cutNum);
     }
 
     /** 获取该站占第几行 */
     getStationInRow(idx: number): number {
-        let row = 1, stationWidth = AREA_INFO.width * (idx + 1)
+        let row = 1, stationWidth = AREA_INFO.width * (idx + 1) ,  canvasWidth = this.basicData.canvasWidth
+        let tempStationWidth = stationWidth ;
 
-        if (stationWidth > this.basicData.canvasWidth) {
-            row = Math.floor(stationWidth / this.basicData.canvasWidth) + 1
+
+        while(tempStationWidth > 0){
+            tempStationWidth -= AREA_INFO.width
+            canvasWidth -= AREA_INFO.width
+
+            if(tempStationWidth!=0 && canvasWidth < AREA_INFO.width){
+                canvasWidth = this.basicData.canvasWidth
+                row++
+            }
         }
 
         return row
@@ -80,8 +86,25 @@ export class BaseDataService {
         if(stationWidth < this.basicData.canvasWidth){
             res = idx
         }else{
-            res =  Math.floor(this.getRowWidth(stationWidth) / AREA_INFO.width ) 
+            let tempRes = -1 , tempStationWidth = stationWidth ,  canvasWidth = this.basicData.canvasWidth
+            console.log(stationWidth);
+            while(tempStationWidth > 0){
+                tempStationWidth -= AREA_INFO.width
+                canvasWidth -= AREA_INFO.width
+                tempRes++
+                console.log(tempStationWidth ,  canvasWidth , tempRes);
+                if(tempStationWidth!=0 && canvasWidth < AREA_INFO.width){
+                    canvasWidth = this.basicData.canvasWidth
+                    tempRes = -1
+                }
+                
+            }
+            
+
+            res = tempRes
         }
+
+        console.log(idx+1 , res);
 
 
         return res
@@ -95,6 +118,7 @@ export class BaseDataService {
             res -= this.basicData.canvasWidth
         }
 
+
         return res
     }
 
@@ -107,12 +131,25 @@ export class BaseDataService {
         while (trendsWidth > 0 && stationNums > 0) {
             trendsWidth = trendsWidth - AREA_INFO.width
             stationNums--
+       
+            
 
-            if (trendsWidth < 0 && stationNums != 0) {
+            if (trendsWidth <= 0 && stationNums != 0) {
                 trendsWidth = this.basicData.canvasWidth
                 row++
             }
+
+            if(stationNums==0 && trendsWidth< AREA_INFO.width){
+                row++
+            }
+
         }
+
+
+        // console.log(trendsWidth);
+
+        console.log(row);
+        
 
         return row
     }
@@ -120,7 +157,11 @@ export class BaseDataService {
 
     /** 根据站点占几行返回绘制的高度Y */
     getStationY(row: number) {
-        return Math.floor(this.basicData.canvasHeight / (row + 1));
+
+        console.log(this.basicData.canvasHeight , this.basicData.canvasHeight / (row+1));
+        
+
+        return this.basicData.canvasHeight / (row+1);
     }
 
 

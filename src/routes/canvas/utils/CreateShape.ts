@@ -6,10 +6,7 @@ export class CreateShape{
     canvas:any;
 
     constructor(config:any){
-        console.log('CreateShape',config);
-
         this.canvas = config.canvas
-        
     }
 
 

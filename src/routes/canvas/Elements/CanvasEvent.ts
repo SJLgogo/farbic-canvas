@@ -1,6 +1,7 @@
 import { fabric } from 'fabric';
 import { CreateShape } from '../utils/CreateShape';
 import { Mode } from './Shape';
+import { tapable } from '../utils/Tapable';
 
 interface Config {
   canvas: any,
@@ -48,6 +49,10 @@ export class CanvasEvent extends CreateShape {
     this.canvas.on('mouse:wheel', (event: any) => this.handleMouseWheel(event));
 
     this.canvas.on('drop', (event: any) => this.mouseDrop(event))
+
+    this.canvas.on('selection:created',(event:any) => this.selectionCreated(event))
+
+    this.canvas.on('selection:cleared',(event:any) => this.selectionClear(event))
   }
 
 
@@ -199,6 +204,21 @@ export class CanvasEvent extends CreateShape {
   returnCanvasInit():void{
     this.canvas.isDrawingMode = false
     this.canvas.selection = true
+  }
+
+
+  selectionCreated(e:any):void{
+    if(e.selected.length == 1){
+      tapable._hooks.canvasSelectHook.call(e.selected[0])
+    }
+    if(e.selected.length > 1){
+
+    }
+  }
+
+
+  selectionClear(e:any):void{
+      tapable._hooks.canvasSelectHook.call(null)
   }
 
 

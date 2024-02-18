@@ -27,6 +27,10 @@
     </div>
 
 
+    <div class="props" *ngIf="canvasEditor.selectedKlass">
+        <app-property [(klass)]="canvasEditor.selectedKlass" [canvas]="canvasEditor.canvas"></app-property>
+    </div>
+
 
 
 </div>
