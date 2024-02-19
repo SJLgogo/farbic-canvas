@@ -19,6 +19,23 @@
             </div>
         </div>
 
+        <div class="item">
+            <p>操作</p>
+            <div class="eles">
+
+                <div class="ele"  *ngIf="canvasEditor.getActiveObject()" (click)="operateFn('remove')"  >
+                    <img src="assets/images/remove.png" />
+                </div>
+
+
+                <div class="ele" *ngFor="let item of operateEles" (click)="operateFn(item.mode)"  >
+                    <img  [src]="item.iconSrc" />
+                </div>
+
+                <button (click)="save()">保存</button>
+            </div>
+        </div>
+
     </div>
 
 

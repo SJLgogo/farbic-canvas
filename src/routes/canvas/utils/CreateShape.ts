@@ -56,6 +56,13 @@ export class CreateShape{
     }
 
 
+    /** 移除元素 */
+    removeEle(ele:any):void{
+        this.canvas.remove(ele)
+        this.canvas.renderAll()
+    }
+
+
 
 
 }

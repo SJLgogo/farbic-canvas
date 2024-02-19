@@ -10,6 +10,11 @@ export const DragList:ModeShape[]=[
     {mode:'rect' , iconSrc:'assets/images/rect.png'},
 ]
 
+export const operateList:any[]=[
+    {mode:'next' , iconSrc:'assets/images/next.png'},
+    {mode:'last' , iconSrc:'assets/images/last.png'},
+]
+
 
 export interface ModeShape{
     mode:Mode,

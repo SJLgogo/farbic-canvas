@@ -87,12 +87,12 @@ export class BaseDataService {
             res = idx
         }else{
             let tempRes = -1 , tempStationWidth = stationWidth ,  canvasWidth = this.basicData.canvasWidth
-            console.log(stationWidth);
+            // console.log(stationWidth);
             while(tempStationWidth > 0){
                 tempStationWidth -= AREA_INFO.width
                 canvasWidth -= AREA_INFO.width
                 tempRes++
-                console.log(tempStationWidth ,  canvasWidth , tempRes);
+                // console.log(tempStationWidth ,  canvasWidth , tempRes);
                 if(tempStationWidth!=0 && canvasWidth < AREA_INFO.width){
                     canvasWidth = this.basicData.canvasWidth
                     tempRes = -1
@@ -104,7 +104,6 @@ export class BaseDataService {
             res = tempRes
         }
 
-        console.log(idx+1 , res);
 
 
         return res
@@ -146,9 +145,6 @@ export class BaseDataService {
         }
 
 
-        // console.log(trendsWidth);
-
-        console.log(row);
         
 
         return row
@@ -158,7 +154,6 @@ export class BaseDataService {
     /** 根据站点占几行返回绘制的高度Y */
     getStationY(row: number) {
 
-        console.log(this.basicData.canvasHeight , this.basicData.canvasHeight / (row+1));
         
 
         return this.basicData.canvasHeight / (row+1);

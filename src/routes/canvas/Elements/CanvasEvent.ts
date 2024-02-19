@@ -162,6 +162,20 @@ export class CanvasEvent extends CreateShape {
   mouseUpMode(event: any): void {
     if (event.e.button === 0) {
       this.isDrawing = false;
+
+      switch (this.currentMode) {
+        case 'line':
+          if(this.line.width == 0){
+            this.removeEle(this.line)
+          }else{
+            this.canvas.setActiveObject(this.line);
+            this.canvas.renderAll();
+          }
+          break;
+        default:
+          break;
+      }
+
     }
   }
 
@@ -187,6 +201,7 @@ export class CanvasEvent extends CreateShape {
   setCurrentMode(mode: Mode): void {
     this.returnCanvasInit()
     this.currentMode = mode
+
     switch (this.currentMode) {
       case 'fhpath':
         this.canvas.isDrawingMode = true
@@ -222,6 +237,22 @@ export class CanvasEvent extends CreateShape {
   }
 
 
+  /** 禁用交互 */
+  disableInteractivity():void{
+    this.canvas.forEachObject((obj:any)=> {
+        obj.selectable = false;
+        obj.evented = false;
+    });
+  }
+
+
+  /** 启用交互 */
+  enableInteractivity():void{
+    this.canvas.forEachObject((obj:any)=> {
+      obj.selectable = true;
+      obj.evented = true;
+  });
+  }
 
 }
 

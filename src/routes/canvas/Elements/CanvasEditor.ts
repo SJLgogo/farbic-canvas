@@ -46,12 +46,15 @@ export class canvasEditor {
 
     setSelectedKlass(e:any):void{
         this.selectedKlass = e
-        console.log(this.selectedKlass);
     }
 
 
     clear(): void {
         this.canvas.clear()
+    }
+
+    loadJson(canvasJson:any):void{
+       this.canvas.loadFromJSON(canvasJson ,this.canvas.renderAll());
     }
 
     getActiveObject(): any {
