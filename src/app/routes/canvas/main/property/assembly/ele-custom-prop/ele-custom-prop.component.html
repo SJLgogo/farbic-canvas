@@ -1,0 +1,23 @@
+<main>
+    <div class="item">
+        <span>id :</span>
+        <input nz-input [(ngModel)]="_klass.c_code" (ngModelChange)="customChange('c_code',$event)"/>
+    </div>
+    <div class="item">
+        <span>名称 :</span>
+        <input nz-input [(ngModel)]="_klass.c_name" (ngModelChange)="customChange('c_name',$event)"/>
+    </div>
+    <div class="item">
+        <span>起始里程标 :</span>
+        <input nz-input [(ngModel)]="_klass.c_start" (ngModelChange)="customChange('c_start',$event)"/>
+    </div>
+    <div class="item">
+        <span>结束里程标 :</span>
+        <input nz-input [(ngModel)]="_klass.c_end" (ngModelChange)="customChange('c_end',$event)"/>
+    </div>
+    <div class="item">
+        <span>颜色</span>
+        <!-- <nz-color-picker nzShowText></nz-color-picker> -->
+    </div>
+
+</main>

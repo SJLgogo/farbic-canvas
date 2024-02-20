@@ -1,0 +1,55 @@
+<div class="main">
+  <div class="shape">
+    <div class="item">
+      <p>基础元素</p>
+      <div class="eles">
+        <div
+          (click)="setMode(item.mode)"
+          class="ele"
+          *ngFor="let item of BaseEles"
+          [ngClass]="item.mode == this.canvasEditor.canvasEvent.currentMode ? 'selected' : ''"
+        >
+          <img [src]="item.iconSrc" />
+        </div>
+      </div>
+    </div>
+
+    <div class="item">
+      <p>形状</p>
+      <div class="eles">
+        <div
+          draggable="true"
+          (click)="setMode(item.mode)"
+          class="ele"
+          *ngFor="let item of DragEles"
+          [ngClass]="item.mode == this.canvasEditor.canvasEvent.currentMode ? 'selected' : ''"
+        >
+          <img [src]="item.iconSrc" />
+        </div>
+      </div>
+    </div>
+
+    <div class="item">
+      <p>操作</p>
+      <div class="eles">
+        <div class="ele" *ngIf="canvasEditor.getActiveObject()" (click)="operateFn('remove')">
+          <img src="assets/images/remove.png" />
+        </div>
+
+        <div class="ele" *ngFor="let item of operateEles" (click)="operateFn(item.mode)">
+          <img [src]="item.iconSrc" />
+        </div>
+
+        <button (click)="save()">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="canvasContainer">
+    <canvas id="canvas" class="canvas"></canvas>
+  </div>
+
+  <div class="props" *ngIf="canvasEditor.selectedKlass">
+    <app-property [(klass)]="canvasEditor.selectedKlass" [canvas]="canvasEditor.canvas"></app-property>
+  </div>
+</div>

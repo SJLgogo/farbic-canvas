@@ -26,7 +26,7 @@
   "scripts": {
     "ng-high-memory": "node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng",
     "ng": "ng",
-    "start": "node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng s --host 192.168.31.212 --port 41201 --disable-host-check",
+    "start": "node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng s --host 192.168.31.211 --port 4200 --disable-host-check",
     "hmr": "ng s -o --hmr",
     "build": "npm run ng-high-memory build -- --prod --base-href=/platform-admin/",
     "analyze": "npm run ng-high-memory build -- --source-map",
@@ -71,6 +71,7 @@
     "ajv-formats": "^2.1.1",
     "ang-jsoneditor": "^1.10.5",
     "clipboard": "^2.0.11",
+    "fabric": "^5.3.0",
     "jsoneditor": "^9.9.0",
     "lodash": "^4.17.21",
     "ng-zorro-antd": "^13.1.1",
@@ -78,6 +79,7 @@
     "ngx-ueditor": "^13.0.0",
     "rxjs": "~7.5.0",
     "screenfull": "^6.0.1",
+    "tapable": "^2.2.1",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
   },
@@ -92,7 +94,7 @@
     "@angular/compiler-cli": "~13.3.0",
     "@angular/language-service": "~13.3.0",
     "@delon/testing": "^13.4.2",
-    "@huiztech/code-generator": "0.0.5",
+    "@types/fabric": "^5.3.7",
     "@types/jasmine": "~3.10.0",
     "@types/jasminewd2": "~2.0.10",
     "@types/lodash": "^4.14.181",

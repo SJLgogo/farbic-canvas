@@ -18,5 +18,12 @@ module.exports = {
     changeOrigin: true,
     logLevel: 'debug',
     pathRewrite: { '^/api': '' }
+  },
+  '/canvasServer': {
+    target: 'http://192.168.31.211:4199/',
+    secure: false, // Ignore invalid SSL certificates
+    changeOrigin: true,
+    logLevel: 'debug',
+    pathRewrite: { '^/canvasServer': '' }
   }
 };

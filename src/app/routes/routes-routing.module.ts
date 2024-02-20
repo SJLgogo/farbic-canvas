@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SimpleGuard } from '@delon/auth';
-import { PreloadOptionalModules } from '@delon/theme';
+// import { PreloadOptionalModules } from '@delon/theme';
 import { environment } from '@env/environment';
-
 // layout
 import { LayoutBasicComponent } from '../layout/basic/basic.component';
 import { LayoutBlankComponent } from '../layout/blank/blank.component';
@@ -11,28 +10,13 @@ import { LayoutBlankComponent } from '../layout/blank/blank.component';
 const routes: Routes = [
   {
     path: '',
-    component: LayoutBasicComponent,
-    canActivate: [SimpleGuard],
-    canActivateChild: [SimpleGuard],
+    // component: LayoutBasicComponent,
+    // canActivate: [SimpleGuard],
+    // canActivateChild: [SimpleGuard],
     data: {},
     children: [
-      { path: '', redirectTo: 'setup', pathMatch: 'full' },
-      {
-        path: 'dashboard',
-        loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
-        data: { preload: true }
-      },
-      {
-        path: 'widgets',
-        loadChildren: () => import('./widgets/widgets.module').then(m => m.WidgetsModule)
-      },
-      { path: 'style', loadChildren: () => import('./style/style.module').then(m => m.StyleModule) },
-      { path: 'delon', loadChildren: () => import('./delon/delon.module').then(m => m.DelonModule) },
-      { path: 'extras', loadChildren: () => import('./extras/extras.module').then(m => m.ExtrasModule) },
-      { path: 'pro', loadChildren: () => import('./pro/pro.module').then(m => m.ProModule) },
-      { path: 'system', loadChildren: () => import('./system/system.module').then(m => m.SystemModule) },
-      { path: 'dict', loadChildren: () => import('./dict/dict.module').then(m => m.DictModule) },
-      { path: 'setup', loadChildren: () => import('./setup/setup.module').then(m => m.SetupModule) }
+      { path: '', redirectTo: 'canvas', pathMatch: 'full' },
+      { path: 'canvas', loadChildren: () => import('./canvas/canvas.module').then(m => m.CanvasModule) }
     ]
   },
   // Blak Layout 空白布局
@@ -52,16 +36,15 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  providers: [PreloadOptionalModules],
+  providers: [],
   imports: [
     RouterModule.forRoot(routes, {
       useHash: environment.useHash,
       // NOTICE: If you use `reuse-tab` component and turn on keepingScroll you can set to `disabled`
       // Pls refer to https://ng-alain.com/components/reuse-tab
       scrollPositionRestoration: 'top',
-      preloadingStrategy: PreloadOptionalModules
     })
   ],
   exports: [RouterModule]
 })
-export class RouteRoutingModule {}
+export class RouteRoutingModule { }
