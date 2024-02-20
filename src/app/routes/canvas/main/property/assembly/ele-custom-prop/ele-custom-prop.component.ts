@@ -5,11 +5,11 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   templateUrl: './ele-custom-prop.component.html',
   styleUrls: ['./ele-custom-prop.component.less']
 })
-export class EleCustomPropComponent implements OnInit  {
+export class EleCustomPropComponent implements OnInit {
 
   _klass: any;
 
-  @Input() 
+  @Input()
   get klass(): any {
     return this._klass;
   }
@@ -22,27 +22,39 @@ export class EleCustomPropComponent implements OnInit  {
 
 
   @Input()
-  canvas:any;
+  canvas: any;
 
-  constructor(){
+  constructor() {
   }
 
-  custom = '自定义参数'
+  color: string = '#FFF';
 
 
   ngOnInit(): void {
   }
 
 
-  customChange( prop:string , e:string):void{
+  customChange(prop: string, e: string): void {
     this.klass[prop] = e;
-    const post:any= {}
+    const post: any = {}
     post[prop] = e
     this._klass.set(post);
     this.canvas.renderAll();
   }
 
 
+  getChangeColor(e: any): void {
+
+  }
+
+  click(): void {
+    this.canvas.bringToFront(this._klass)
+  }
+
+  zIndexChange(e: any): void {
+    this.canvas.moveTo(this._klass, e)
+    this.canvas.renderAll()
+  }
 
 
 

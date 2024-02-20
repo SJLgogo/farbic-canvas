@@ -33,58 +33,6 @@ import { WidgetRegistry } from '@delon/form';
 import { SelectEmployeeButtonComponent } from './shared/components/select-employee-button/select-employee-button.component';
 import { DelonACLModule } from '@delon/acl';
 
-const LANG = {
-  abbr: 'zh',
-  ng: ngLang,
-  zorro: zorroLang,
-  date: dateLang,
-  delon: delonLang
-};
-
-registerLocaleData(LANG.ng, LANG.abbr);
-const LANG_PROVIDES = [
-  { provide: LOCALE_ID, useValue: LANG.abbr },
-  { provide: NZ_I18N, useValue: LANG.zorro },
-  { provide: NZ_DATE_LOCALE, useValue: LANG.date },
-  { provide: DELON_LOCALE, useValue: LANG.delon }
-];
-// #endregion
-
-// #region i18n services
-
-const I18NSERVICE_PROVIDES = [{ provide: ALAIN_I18N_TOKEN, useClass: I18NService, multi: false }];
-
-// #endregion
-
-// #region global third module
-
-const GLOBAL_THIRD_MODULES: Array<Type<any>> = [BidiModule];
-
-// #endregion
-
-const FORM_MODULES = [JsonSchemaModule];
-// #endregion
-
-const INTERCEPTOR_PROVIDES = [
-  { provide: HTTP_INTERCEPTORS, useClass: SimpleInterceptor, multi: true },
-  { provide: HTTP_INTERCEPTORS, useClass: DefaultInterceptor, multi: true }
-];
-// #endregion
-
-export function StartupServiceFactory(startupService: StartupService): () => Observable<void> {
-  return () => startupService.load();
-}
-
-const APPINIT_PROVIDES = [
-  StartupService,
-  {
-    provide: APP_INITIALIZER,
-    useFactory: StartupServiceFactory,
-    deps: [StartupService],
-    multi: true
-  }
-];
-// #endregion
 
 @NgModule({
   declarations: [AppComponent],
@@ -99,16 +47,11 @@ const APPINIT_PROVIDES = [
     LayoutModule,
     RoutesModule,
     STWidgetModule,
-    NzNotificationModule,
-    ...GLOBAL_THIRD_MODULES,
-    ...FORM_MODULES
+    NzNotificationModule
   ],
-  providers: [...LANG_PROVIDES, ...INTERCEPTOR_PROVIDES, ...I18NSERVICE_PROVIDES, ...APPINIT_PROVIDES],
+  // providers: [...LANG_PROVIDES, ...INTERCEPTOR_PROVIDES, ...I18NSERVICE_PROVIDES, ...APPINIT_PROVIDES],
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  //注册选人的button小部件
-  constructor(widgetRegistry: WidgetRegistry) {
-    widgetRegistry.register(SelectEmployeeButtonComponent.KEY /* 'range-input' */, SelectEmployeeButtonComponent);
-  }
+
 }

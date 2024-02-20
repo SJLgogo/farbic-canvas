@@ -56,6 +56,19 @@ export class CreateShape {
     }
 
 
+    /** 创建图像 */
+    createImg(top: any, left: any) {
+        const props: any = {
+            left: left,
+            top: top,
+        }
+        fabric.Image.fromURL('assets/images/station.png', (img: any) => {
+            img.set(props);
+            this.canvas.add(img);
+        });
+    }
+
+
     /** 移除元素 */
     removeEle(ele: any): void {
         this.canvas.remove(ele)

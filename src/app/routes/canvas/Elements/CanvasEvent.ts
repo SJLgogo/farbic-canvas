@@ -50,11 +50,11 @@ export class CanvasEvent extends CreateShape {
 
     this.canvas.on('drop', (event: any) => this.mouseDrop(event))
 
-    this.canvas.on('selection:created',(event:any) => this.selectionCreated(event))
+    this.canvas.on('selection:created', (event: any) => this.selectionCreated(event))
 
-    this.canvas.on('selection:updated',(event:any) => this.selectionCreated(event))
+    this.canvas.on('selection:updated', (event: any) => this.selectionCreated(event))
 
-    this.canvas.on('selection:cleared',(event:any) => this.selectionClear(event))
+    this.canvas.on('selection:cleared', (event: any) => this.selectionClear(event))
   }
 
 
@@ -78,6 +78,9 @@ export class CanvasEvent extends CreateShape {
       case 'text':
         this.createText(pointerVpt.y, pointerVpt.x)
         break
+      case 'img':
+        this.createImg(pointerVpt.y, pointerVpt.x)
+        break
     }
     this.canvas.renderAll()
     this.currentDragType = null
@@ -92,7 +95,7 @@ export class CanvasEvent extends CreateShape {
   /** 鼠标绘制形状 */
   mouseDownMode(event: any): void {
 
-    if(this.canvas.getActiveObject()){
+    if (this.canvas.getActiveObject()) {
       return
     }
 
@@ -104,7 +107,7 @@ export class CanvasEvent extends CreateShape {
       case 'select':
         break;
       case 'line':
-        this.line = this.createLine(0, 0, {points:points , noNeedTop:true})
+        this.line = this.createLine(0, 0, { points: points, noNeedTop: true })
         break;
       default:
         break;
@@ -170,12 +173,12 @@ export class CanvasEvent extends CreateShape {
   mouseUpMode(event: any): void {
     if (event.e.button === 0) {
       this.isDrawing = false;
-      
+
       switch (this.currentMode) {
         case 'line':
-          if(this.line.width == 0){
+          if (this.line.width == 0) {
             this.removeEle(this.line)
-          }else{
+          } else {
             this.canvas.setActiveObject(this.line);
             this.canvas.renderAll();
           }
@@ -219,7 +222,7 @@ export class CanvasEvent extends CreateShape {
         break;
       case 'select':
         this.enableInteractivity()
-      break;
+        break;
       default:
         break;
     }
@@ -227,42 +230,42 @@ export class CanvasEvent extends CreateShape {
 
 
   /** 返回画布默认状态 */
-  returnCanvasInit():void{
+  returnCanvasInit(): void {
     this.canvas.isDrawingMode = false
     this.canvas.selection = true
   }
 
 
-  selectionCreated(e:any):void{
-    if(e.selected.length == 1){
+  selectionCreated(e: any): void {
+    if (e.selected.length == 1) {
       tapable._hooks.canvasSelectHook.call(e.selected[0])
     }
-    if(e.selected.length > 1){
+    if (e.selected.length > 1) {
 
     }
   }
 
 
-  selectionClear(e:any):void{
-      tapable._hooks.canvasSelectHook.call(null)
+  selectionClear(e: any): void {
+    tapable._hooks.canvasSelectHook.call(null)
   }
 
 
   /** 禁用交互 */
-  disableInteractivity():void{
+  disableInteractivity(): void {
     const objects = this.canvas.getObjects();
     for (var i in objects) {
-        objects[i].selectable = false;
+      objects[i].selectable = false;
     }
     this.canvas.renderAll();
   }
 
 
   /** 启用交互 */
-  enableInteractivity():void{
+  enableInteractivity(): void {
     const objects = this.canvas.getObjects();
     for (const i in objects) {
-        objects[i].selectable = true;
+      objects[i].selectable = true;
     }
     console.log(objects);
     this.canvas.renderAll();

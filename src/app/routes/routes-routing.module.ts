@@ -19,20 +19,6 @@ const routes: Routes = [
       { path: 'canvas', loadChildren: () => import('./canvas/canvas.module').then(m => m.CanvasModule) }
     ]
   },
-  // Blak Layout 空白布局
-  {
-    path: 'data-v',
-    component: LayoutBlankComponent,
-    children: [{ path: '', loadChildren: () => import('./data-v/data-v.module').then(m => m.DataVModule) }]
-  },
-  // passport
-  {
-    path: '',
-    loadChildren: () => import('./passport/passport.module').then(m => m.PassportModule),
-    data: { preload: true }
-  },
-  { path: 'exception', loadChildren: () => import('./exception/exception.module').then(m => m.ExceptionModule) },
-  { path: '**', redirectTo: 'exception/404' }
 ];
 
 @NgModule({

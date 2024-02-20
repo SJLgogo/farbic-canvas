@@ -1,9 +1,6 @@
 <main>
-    <div class="item">
-        <span>字体大小</span>
-        <nz-input-number [nzMin]="1" [nzMax]="10" [nzStep]="1"></nz-input-number>
-    </div>
-
-
-
+  <div class="item">
+    <span>字体大小</span>
+    <nz-input-number [(ngModel)]="_klass.fontSize" [nzStep]="1" (ngModelChange)="textChange('fontSize', $event)"></nz-input-number>
+  </div>
 </main>

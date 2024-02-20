@@ -8,7 +8,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 export class EleTextComponent implements OnInit {
   _klass: any;
 
-  @Input() 
+  @Input()
   get klass(): any {
     return this._klass;
   }
@@ -20,11 +20,19 @@ export class EleTextComponent implements OnInit {
   @Output() klassChange: EventEmitter<any> = new EventEmitter<any>();
 
   @Input()
-  canvas:any;
-  
+  canvas: any;
+
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  textChange(prop: string, e: any): void {
+    this.klass[prop] = e;
+    const post: any = {}
+    post[prop] = e
+    this._klass.set(post);
+    this.canvas.renderAll();
   }
 
 }

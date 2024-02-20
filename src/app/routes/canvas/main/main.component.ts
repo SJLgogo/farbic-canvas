@@ -32,7 +32,7 @@ export class MainComponent implements OnInit {
 
   declare canvasEditor: canvasEditor
 
-  serializeProps: string[] = ['c_code', 'c_name', 'c_start', 'c_end']
+  serializeProps: string[] = ['c_code', 'c_name', 'c_start', 'c_end', 'zIndex']
 
   ngOnInit(): void {
     this.init()
