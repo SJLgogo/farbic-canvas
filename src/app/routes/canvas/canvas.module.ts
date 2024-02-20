@@ -14,11 +14,13 @@ import { EleLineComponent } from './main/property/assembly/ele-line/ele-line.com
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { EleTextComponent } from './main/property/assembly/ele-text/ele-text.component';
 import { ScheduleSelectColorComponent } from './main/property/assembly/select-color/select-color.component';
+// import { NzColorPickerModule } from 'ng-zorro-antd/color-picker';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 @NgModule({
   declarations: [MainComponent, PropertyComponent, EleCoordinateComponent, EleCustomPropComponent, EleLineComponent, ScheduleSelectColorComponent, EleTextComponent],
   imports: [
-    CommonModule, CanvasRoutingModule, NzCollapseModule, NzInputNumberModule, FormsModule, HttpClientModule, NzSwitchModule
+    CommonModule, CanvasRoutingModule, NzCollapseModule, NzInputNumberModule, FormsModule, HttpClientModule, NzSwitchModule, ColorPickerModule
   ],
   providers: [NodeService]
 })

@@ -1,9 +1,9 @@
 import { SyncHook } from "tapable"
 
 
-class Tapable{
+class Tapable {
 
-    _hooks={
+    _hooks = {
         canvasSelectHook: new SyncHook(['params']),
         canvasSelectsHook: new SyncHook(['params']),
     }

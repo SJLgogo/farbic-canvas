@@ -15,6 +15,7 @@ export class EleCustomPropComponent implements OnInit {
   }
   set klass(value: any) {
     this._klass = value;
+    this.initColor()
     this.klassChange.emit(this._klass);
   }
 
@@ -33,6 +34,18 @@ export class EleCustomPropComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  initColor(): void {
+    const type = this._klass.type
+
+    switch (type) {
+      case 'i-text':
+        this.color = this._klass.fill
+        break;
+
+      default:
+        break;
+    }
+  }
 
   customChange(prop: string, e: string): void {
     this.klass[prop] = e;
@@ -44,7 +57,17 @@ export class EleCustomPropComponent implements OnInit {
 
 
   getChangeColor(e: any): void {
+    const type = this._klass.type
 
+    switch (type) {
+      case 'i-text':
+        this._klass.set('fill', e);
+        this.canvas.renderAll();
+        break;
+
+      default:
+        break;
+    }
   }
 
   click(): void {

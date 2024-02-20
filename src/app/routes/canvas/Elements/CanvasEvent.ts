@@ -32,6 +32,10 @@ export class CanvasEvent extends CreateShape {
 
   line: any;
 
+  historyKlass: any = [];  // 操作历史记录
+
+  historyIndex = -1
+
 
   constructor(config: Config) {
     super({
@@ -55,7 +59,14 @@ export class CanvasEvent extends CreateShape {
     this.canvas.on('selection:updated', (event: any) => this.selectionCreated(event))
 
     this.canvas.on('selection:cleared', (event: any) => this.selectionClear(event))
+
+    this.canvas.on('object:added', (event: any) => this.saveHistory(event))
+
+    this.canvas.on('object:removed', (event: any) => this.saveHistory(event))
+
   }
+
+
 
 
   mouseDrop(event: any): void {
@@ -102,7 +113,6 @@ export class CanvasEvent extends CreateShape {
     this.isDrawing = true
     const pointer = this.canvas.getPointer(event.e);
     const points = [pointer.x, pointer.y, pointer.x, pointer.y];
-    // this.disableInteractivity()
     switch (this.currentMode) {
       case 'select':
         break;
@@ -129,6 +139,7 @@ export class CanvasEvent extends CreateShape {
   handleMouseMove(event: any): void {
     this.mouseMoveDraging(event)
     this.mouseMoveMode(event)
+
   }
 
   /** 鼠标移动拖拽 */
@@ -143,6 +154,7 @@ export class CanvasEvent extends CreateShape {
       this.lastPosY = e.clientY
     }
   }
+
 
   /** 鼠标移动绘制 */
   mouseMoveMode(event: any): void {
@@ -267,9 +279,20 @@ export class CanvasEvent extends CreateShape {
     for (const i in objects) {
       objects[i].selectable = true;
     }
-    console.log(objects);
     this.canvas.renderAll();
   }
+
+
+  saveHistory(event: any): void {
+
+  }
+
+
+  applyHistory(type: 'next' | 'last') {
+
+  }
+
+
 
 }
 

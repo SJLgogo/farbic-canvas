@@ -12,8 +12,8 @@ export const DragList: ModeShape[] = [
 ]
 
 export const operateList: any[] = [
-    { mode: 'next', iconSrc: 'assets/images/next.png' },
     { mode: 'last', iconSrc: 'assets/images/last.png' },
+    { mode: 'next', iconSrc: 'assets/images/next.png' },
 ]
 
 

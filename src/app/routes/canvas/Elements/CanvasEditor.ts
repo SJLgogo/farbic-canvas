@@ -5,6 +5,9 @@ import { RenderAuto } from './RenderAuto';
 import { BaseDataService } from '../Base/base.data.service';
 import { RenderAuto2 } from './RenderAuto2';
 import { tapable } from '../utils/Tapable';
+import initAligningGuidelines from '../utils/auxiliaryLine';
+
+
 
 export class canvasEditor {
 
@@ -34,6 +37,8 @@ export class canvasEditor {
             baseDataService: config.baseDataService
         })
 
+        initAligningGuidelines(this.canvas)
+
         this.initHooks()
     }
 
@@ -41,10 +46,10 @@ export class canvasEditor {
      * 注册事件hooks
     */
     initHooks(): void {
-        tapable._hooks.canvasSelectHook.tap('画布元素单选' ,(e:any)=>this.setSelectedKlass(e))
+        tapable._hooks.canvasSelectHook.tap('画布元素单选', (e: any) => this.setSelectedKlass(e))
     }
 
-    setSelectedKlass(e:any):void{
+    setSelectedKlass(e: any): void {
         console.log(e);
         this.selectedKlass = e
     }
@@ -54,10 +59,10 @@ export class canvasEditor {
         this.canvas.clear()
     }
 
-    loadJson(canvasJson:any):void{
-       this.canvas.loadFromJSON(canvasJson ,this.canvas.renderAll.bind(this.canvas));
+    loadJson(canvasJson: any): void {
+        this.canvas.loadFromJSON(canvasJson, this.canvas.renderAll.bind(this.canvas));
 
-       console.log(this.canvas);
+        console.log(this.canvas);
     }
 
     getActiveObject(): any {
@@ -104,6 +109,7 @@ export class canvasEditor {
         return false
     }
 
+
 }
 
 interface Config {
@@ -117,9 +123,10 @@ const canvaProps = {
     width: 0,
     height: 0,
     isDrawingMode: false, // 画线模式
-    selection:true,  // 元素选择
+    selection: true,  // 元素选择
     backgroundColor: 'white'
 };
+
 
 
 

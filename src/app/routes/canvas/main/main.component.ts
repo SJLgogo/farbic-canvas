@@ -87,10 +87,15 @@ export class MainComponent implements OnInit {
 
   operateFn(mode: string) {
     switch (mode) {
+      case 'next':
+        this.canvasEditor.canvasEvent.applyHistory('next')
+        break;
+      case 'last':
+        this.canvasEditor.canvasEvent.applyHistory('last')
+        break;
       case 'remove':
         this.canvasEditor.removeActiceObject()
         break;
-
       default:
         break;
     }

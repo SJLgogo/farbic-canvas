@@ -28,10 +28,7 @@ export class EleTextComponent implements OnInit {
   }
 
   textChange(prop: string, e: any): void {
-    this.klass[prop] = e;
-    const post: any = {}
-    post[prop] = e
-    this._klass.set(post);
+    this._klass.set('fontSize', e);
     this.canvas.renderAll();
   }
 

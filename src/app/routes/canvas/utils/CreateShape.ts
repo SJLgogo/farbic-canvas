@@ -32,7 +32,8 @@ export class CreateShape {
             top: top,
             fontFamily: 'Arial',
             fontSize: 12,
-            fill: 'black'
+            fill: 'black',
+            statefullCache: true
         });
         this.canvas.add(text)
         return text
@@ -45,6 +46,7 @@ export class CreateShape {
             top: top,
             stroke: 'black',
             strokeWidth: 1,
+            statefullCache: true
         }
         if (config.noNeedTop) {
             delete props.left
@@ -61,6 +63,7 @@ export class CreateShape {
         const props: any = {
             left: left,
             top: top,
+            statefullCache: true
         }
         fabric.Image.fromURL('assets/images/station.png', (img: any) => {
             img.set(props);
