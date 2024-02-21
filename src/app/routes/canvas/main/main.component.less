@@ -1,4 +1,4 @@
-.main{
+.main {
     box-sizing: border-box;
     padding: 10px 20px;
     display: flex;
@@ -6,22 +6,25 @@
     min-height: 100vh;
 
     background-color: white;
-    .shape{
+
+    .shape {
         width: 15%;
         margin-right: 30px;
 
-        .item{
+        .item {
             margin-bottom: 20px;
-            &>p:nth-child(1){
+
+            &>p:nth-child(1) {
                 font-size: 16px;
                 margin-bottom: 15px;
             }
-            .eles{
+
+            .eles {
                 display: flex;
                 align-items: center;
                 flex-wrap: wrap;
 
-                .ele{
+                .ele {
                     width: 40px;
                     height: 40px;
                     border-radius: 50%;
@@ -33,16 +36,16 @@
 
                 }
 
-                
-                .selected{
-                    background-color:rgb(237, 249, 245) ;
+
+                .selected {
+                    background-color: rgb(237, 249, 245);
                 }
             }
         }
     }
 
- 
-    .canvasContainer{
+
+    .canvasContainer {
         flex: 1;
         height: auto;
         display: flex;
@@ -50,13 +53,14 @@
         justify-content: center;
         background-color: rgb(241, 241, 241);
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-        .canvas{
+
+        .canvas {
             width: 1400px;
             height: 90%;
         }
     }
 
-    .props{
+    .props {
         position: absolute;
         right: 0px;
         top: 0px;
@@ -64,5 +68,23 @@
         width: 300px;
         box-sizing: border-box;
         padding: 20px 10px;
+    }
+}
+
+
+.tip {
+    position: absolute;
+    transition: 0.3s;
+    animation: scaleAnimation 0.3s forwards;
+}
+
+
+@keyframes scaleAnimation {
+    0% {
+        transform: scale(0);
+    }
+
+    100% {
+        transform: scale(1);
     }
 }

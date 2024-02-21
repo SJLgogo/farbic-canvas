@@ -41,6 +41,9 @@ export class EleCustomPropComponent implements OnInit {
       case 'i-text':
         this.color = this._klass.fill
         break;
+      case 'line':
+        this.color = this._klass.stroke
+        break;
 
       default:
         break;
@@ -52,6 +55,7 @@ export class EleCustomPropComponent implements OnInit {
     const post: any = {}
     post[prop] = e
     this._klass.set(post);
+    console.log(this._klass);
     this.canvas.renderAll();
   }
 
@@ -64,7 +68,9 @@ export class EleCustomPropComponent implements OnInit {
         this._klass.set('fill', e);
         this.canvas.renderAll();
         break;
-
+      case 'line':
+        this.customChange('stroke', e)
+        break;
       default:
         break;
     }

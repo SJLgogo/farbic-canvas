@@ -16,9 +16,19 @@ import { EleTextComponent } from './main/property/assembly/ele-text/ele-text.com
 import { ScheduleSelectColorComponent } from './main/property/assembly/select-color/select-color.component';
 // import { NzColorPickerModule } from 'ng-zorro-antd/color-picker';
 import { ColorPickerModule } from 'ngx-color-picker';
+import { TipsComponent } from './main/property/tips/tips.component';
 
 @NgModule({
-  declarations: [MainComponent, PropertyComponent, EleCoordinateComponent, EleCustomPropComponent, EleLineComponent, ScheduleSelectColorComponent, EleTextComponent],
+  declarations: [
+    MainComponent,
+    PropertyComponent,
+    EleCoordinateComponent,
+    EleCustomPropComponent,
+    EleLineComponent,
+    ScheduleSelectColorComponent,
+    EleTextComponent,
+    TipsComponent
+  ],
   imports: [
     CommonModule, CanvasRoutingModule, NzCollapseModule, NzInputNumberModule, FormsModule, HttpClientModule, NzSwitchModule, ColorPickerModule
   ],

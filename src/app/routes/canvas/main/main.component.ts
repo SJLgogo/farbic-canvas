@@ -32,7 +32,7 @@ export class MainComponent implements OnInit {
 
   declare canvasEditor: canvasEditor
 
-  serializeProps: string[] = ['c_code', 'c_name', 'c_start', 'c_end', 'zIndex']
+  serializeProps: string[] = ['c_code', 'c_name', 'c_start', 'c_end', 'zIndex', 'statefullCache']
 
   ngOnInit(): void {
     this.init()
@@ -57,12 +57,15 @@ export class MainComponent implements OnInit {
     const canvasJson = await this.findCanvas()
     if (canvasJson) {
       this.canvasEditor.loadJson(canvasJson)
+      // const info = await this.canvasService.getInfo()
+      // await this.canvasEditor.renderAuto.render(info)
     } else {
       const info = await this.canvasService.getInfo()
       await this.canvasEditor.renderAuto.render(info)
     }
-
   }
+
+
 
   findCanvas(): Promise<any> {
     return new Promise((resolve: any) => {

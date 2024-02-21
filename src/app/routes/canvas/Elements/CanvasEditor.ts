@@ -6,6 +6,8 @@ import { BaseDataService } from '../Base/base.data.service';
 import { RenderAuto2 } from './RenderAuto2';
 import { tapable } from '../utils/Tapable';
 import initAligningGuidelines from '../utils/auxiliaryLine';
+import { initControls } from '../core/initController';
+import { Tips } from './Tips';
 
 
 
@@ -20,6 +22,8 @@ export class canvasEditor {
     declare baseDataService: BaseDataService;
 
     declare selectedKlass: any;  // 单选中的元素
+
+    declare tip: Tips;
 
 
     constructor(config: Config) {
@@ -37,6 +41,14 @@ export class canvasEditor {
             baseDataService: config.baseDataService
         })
 
+        this.tip = new Tips()
+
+        this.init()
+    }
+
+    init(): void {
+        initControls(this.canvas)
+
         initAligningGuidelines(this.canvas)
 
         this.initHooks()
@@ -49,9 +61,9 @@ export class canvasEditor {
         tapable._hooks.canvasSelectHook.tap('画布元素单选', (e: any) => this.setSelectedKlass(e))
     }
 
-    setSelectedKlass(e: any): void {
-        console.log(e);
-        this.selectedKlass = e
+    setSelectedKlass(e: SelectHookProp): void {
+        this.selectedKlass = e.select
+        // e.tipCb && e.tipCb()
     }
 
 
@@ -61,8 +73,7 @@ export class canvasEditor {
 
     loadJson(canvasJson: any): void {
         this.canvas.loadFromJSON(canvasJson, this.canvas.renderAll.bind(this.canvas));
-
-        console.log(this.canvas);
+        this.canvasEvent.addAuxiliaryLine()
     }
 
     getActiveObject(): any {
@@ -124,9 +135,16 @@ const canvaProps = {
     height: 0,
     isDrawingMode: false, // 画线模式
     selection: true,  // 元素选择
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    stopContextMenu: true, // 禁止默认右键菜单
+    controlsAboveOverlay: true, // 超出clipPath后仍然展示控制条
+    // selectionColor: 'white',
+    // selectionBorderColor: 'red'
 };
 
 
-
+interface SelectHookProp {
+    select: any,
+    tipCb?: Function
+}
 

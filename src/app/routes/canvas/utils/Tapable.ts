@@ -6,6 +6,7 @@ class Tapable {
     _hooks = {
         canvasSelectHook: new SyncHook(['params']),
         canvasSelectsHook: new SyncHook(['params']),
+        tipsHook: new SyncHook(['params']),
     }
 
 }

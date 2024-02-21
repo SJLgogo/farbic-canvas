@@ -1,8 +1,8 @@
 <main>
-    <app-ele-coordinate [(klass)]="klass" [canvas]="canvas"></app-ele-coordinate>
-    <app-ele-custom-prop  [(klass)]="klass" [canvas]="canvas"></app-ele-custom-prop>
+  <app-ele-coordinate [(klass)]="klass" [canvas]="canvas"></app-ele-coordinate>
+  <app-ele-custom-prop [(klass)]="klass" [canvas]="canvas"></app-ele-custom-prop>
 
-    <app-ele-line *ngIf="klass.type=='line'" [(klass)]="klass" [canvas]="canvas"></app-ele-line>
+  <app-ele-line *ngIf="klass.type == 'line'" [(klass)]="klass" [canvas]="canvas"></app-ele-line>
 
-    <app-ele-text *ngIf="klass.type=='i-text'" [(klass)]="klass" [canvas]="canvas"></app-ele-text>
+  <app-ele-text *ngIf="klass.type == 'i-text'" [(klass)]="klass" [canvas]="canvas"></app-ele-text>
 </main>

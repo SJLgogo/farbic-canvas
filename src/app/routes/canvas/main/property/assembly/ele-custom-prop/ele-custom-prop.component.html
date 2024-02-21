@@ -20,6 +20,10 @@
     <app-schedule-select-color [color]="color" (sentColor)="getChangeColor($event)"> </app-schedule-select-color>
   </div>
   <div class="item">
+    <span>角度</span>
+    <nz-input-number [(ngModel)]="_klass.angle" [nzStep]="1" (ngModelChange)="customChange('angle', $event)"></nz-input-number>
+  </div>
+  <div class="item">
     <span>元素层级</span>
     <nz-input-number [(ngModel)]="_klass.zIndex" [nzStep]="1" (ngModelChange)="zIndexChange($event)"></nz-input-number>
   </div>

@@ -4,11 +4,11 @@ export enum Line {
 
 
 export enum AREA_INFO {
-    width = 300 ,
+    width = 600,
     height = 100
 }
 
 export enum STATION_INFO {
-    width = 40 ,
+    width = 40,
     height = 40
 }

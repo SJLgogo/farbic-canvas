@@ -53,3 +53,7 @@
     <app-property [(klass)]="canvasEditor.selectedKlass" [canvas]="canvasEditor.canvas"></app-property>
   </div>
 </div>
+
+<div class="tip" *ngIf="canvasEditor.selectedKlass">
+  <app-tips></app-tips>
+</div>

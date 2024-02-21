@@ -34,8 +34,13 @@ export class CanvasEvent extends CreateShape {
 
   historyKlass: any = [];  // 操作历史记录
 
-  historyIndex = -1
+  historyIndex = -1;
 
+  tipsShow: boolean = false
+
+  horizontalLine: any; // 水平辅助线
+
+  verticalLine: any; // 垂直辅助线
 
   constructor(config: Config) {
     super({
@@ -66,7 +71,36 @@ export class CanvasEvent extends CreateShape {
 
   }
 
+  /** 十字辅助线 */
+  addAuxiliaryLine(): void {
+    this.horizontalLine = new fabric.Line([0, 0, this.canvas.width, 0], {
+      stroke: 'red',
+      selectable: false,
+      visible: false // 默认不可见
+    });
+    this.canvas.add(this.horizontalLine);
 
+    // 垂直辅助线
+    this.verticalLine = new fabric.Line([0, 0, 0, this.canvas.height], {
+      stroke: 'red',
+      selectable: false,
+      visible: false // 默认不可见
+    });
+    this.canvas.add(this.verticalLine);
+  }
+
+
+  /** 画直线时增加十字标辅助线 */
+  drawLineShowAuxiliaryLine(pointer: any): void {
+    this.horizontalLine.set({ y1: pointer.y, y2: pointer.y, visible: true });
+    this.verticalLine.set({ x1: pointer.x, x2: pointer.x, visible: true });
+  }
+
+  /** 十字辅助线不可见 */
+  visiableAuxiliaryLine(): void {
+    this.horizontalLine.visible = false;
+    this.verticalLine.visible = false;
+  }
 
 
   mouseDrop(event: any): void {
@@ -105,16 +139,15 @@ export class CanvasEvent extends CreateShape {
 
   /** 鼠标绘制形状 */
   mouseDownMode(event: any): void {
-
     if (this.canvas.getActiveObject()) {
       return
     }
-
     this.isDrawing = true
     const pointer = this.canvas.getPointer(event.e);
     const points = [pointer.x, pointer.y, pointer.x, pointer.y];
     switch (this.currentMode) {
       case 'select':
+        this.enableInteractivity()
         break;
       case 'line':
         this.line = this.createLine(0, 0, { points: points, noNeedTop: true })
@@ -139,7 +172,6 @@ export class CanvasEvent extends CreateShape {
   handleMouseMove(event: any): void {
     this.mouseMoveDraging(event)
     this.mouseMoveMode(event)
-
   }
 
   /** 鼠标移动拖拽 */
@@ -159,17 +191,18 @@ export class CanvasEvent extends CreateShape {
   /** 鼠标移动绘制 */
   mouseMoveMode(event: any): void {
     if (!this.isDrawing) return;
-    var pointer = this.canvas.getPointer(event.e);
+    const pointer = this.canvas.getPointer(event.e);
 
     switch (this.currentMode) {
       case 'line':
+        this.drawLineShowAuxiliaryLine(pointer)
         this.line.set({ x2: pointer.x, y2: pointer.y });
+        this.canvas.renderAll();
         break;
       default:
         break;
     }
 
-    this.canvas.renderAll();
   }
 
   handleMouseUp(event: any): void {
@@ -188,6 +221,7 @@ export class CanvasEvent extends CreateShape {
 
       switch (this.currentMode) {
         case 'line':
+          this.visiableAuxiliaryLine()
           if (this.line.width == 0) {
             this.removeEle(this.line)
           } else {
@@ -230,6 +264,7 @@ export class CanvasEvent extends CreateShape {
         this.canvas.isDrawingMode = true
         break;
       case 'line':
+        this.disableInteractivity()
         this.canvas.selection = false
         break;
       case 'select':
@@ -249,8 +284,17 @@ export class CanvasEvent extends CreateShape {
 
 
   selectionCreated(e: any): void {
+    const tipFn = (e: any) => {
+      tapable._hooks.tipsHook.call({ x: e.e.clientX, y: e.e.clientY })
+    }
+
+    console.log(e.selected[0]);
+
     if (e.selected.length == 1) {
-      tapable._hooks.canvasSelectHook.call(e.selected[0])
+      tapable._hooks.canvasSelectHook.call({
+        select: e.selected[0],
+        tipCb: tipFn.bind(this, e)
+      })
     }
     if (e.selected.length > 1) {
 
@@ -259,7 +303,9 @@ export class CanvasEvent extends CreateShape {
 
 
   selectionClear(e: any): void {
-    tapable._hooks.canvasSelectHook.call(null)
+    tapable._hooks.canvasSelectHook.call({
+      select: null
+    })
   }
 
 
