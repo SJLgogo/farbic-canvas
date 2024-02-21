@@ -69,6 +69,25 @@ export class CanvasEvent extends CreateShape {
 
     this.canvas.on('object:removed', (event: any) => this.saveHistory(event))
 
+    try {
+
+      this.canvas.lowerCanvasEl.addEventListener('contextmenu', (event: any) => {
+        event.preventDefault(); // 阻止默认的右键菜单
+
+        // 获取鼠标在画布上的位置
+        var pointer = this.canvas.getPointer(event);
+        var posX = pointer.x;
+        var posY = pointer.y;
+
+        console.log('右键点击位置 X: ' + posX + ', Y: ' + posY);
+
+        return false; // 阻止进一步的事件处理
+      });
+
+    } catch (error) {
+      console.log(error);
+    }
+
   }
 
   /** 十字辅助线 */
@@ -133,9 +152,20 @@ export class CanvasEvent extends CreateShape {
 
 
   handleMouseDown(event: any): void {
+    console.log(event);
     this.operateCavasDrag(event)
     this.mouseDownMode(event)
+    this.rightClickMenuFn(event)
   }
+
+  /** 右键菜单 */
+  rightClickMenuFn(event: any): void {
+    console.log(event);
+    if (event.button === 3) {
+      console.log(event);
+    }
+  }
+
 
   /** 鼠标绘制形状 */
   mouseDownMode(event: any): void {

@@ -67,6 +67,19 @@ export class CreateShape {
         }
         fabric.Image.fromURL('assets/images/station.png', (img: any) => {
             img.set(props);
+
+
+            const targetWidth = 100;
+            const targetHeight = 40;
+            const imgScaleX = targetWidth / img.width;
+            const imgScaleY = targetHeight / img.height;
+            const scale = Math.min(imgScaleX, imgScaleY);
+            img.set({
+                scaleX: scale,
+                scaleY: scale
+            });
+
+
             this.canvas.add(img);
         });
     }

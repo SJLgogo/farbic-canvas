@@ -9,8 +9,6 @@ import initAligningGuidelines from '../utils/auxiliaryLine';
 import { initControls } from '../core/initController';
 import { Tips } from './Tips';
 
-
-
 export class canvasEditor {
 
     canvas: any;
@@ -61,25 +59,43 @@ export class canvasEditor {
         tapable._hooks.canvasSelectHook.tap('画布元素单选', (e: any) => this.setSelectedKlass(e))
     }
 
+    /**
+     * 选中元素
+     */
     setSelectedKlass(e: SelectHookProp): void {
         this.selectedKlass = e.select
         // e.tipCb && e.tipCb()
     }
 
 
+    /**
+     * 清除画布
+     */
     clear(): void {
         this.canvas.clear()
     }
 
+    /**
+     * 加载json文件
+     * @param canvasJson 
+     */
     loadJson(canvasJson: any): void {
         this.canvas.loadFromJSON(canvasJson, this.canvas.renderAll.bind(this.canvas));
         this.canvasEvent.addAuxiliaryLine()
+        this.findKlassById('line_1')
     }
 
+    /**
+     * 获取选中元素
+     * @returns 
+     */
     getActiveObject(): any {
         return this.canvas.getActiveObject()
     }
 
+    /**
+     * 移除选中元素
+     */
     removeActiceObject(): void {
         if (this.getActiveObject()._objects) {
             const activeObjects = this.canvas.getActiveObjects();
@@ -94,20 +110,31 @@ export class canvasEditor {
     }
 
 
+    /**
+     * 设置拖拽的类型
+     * @param type 
+     */
     setDragType(type: DragType): void {
         this.canvasEvent.setDragType(type)
     }
 
-
+    /**
+        * 设置画线类型
+        * @param mode 
+        */
     setDrawingMode(boolean: Boolean): void {
         this.canvas.isDrawingMode = boolean
     }
+
 
     setCurrentMode(mode: Mode): void {
         this.canvasEvent.setCurrentMode(mode)
     }
 
-
+    /**
+     * 判断是否有选中
+     * @returns 
+     */
     hasOneSelect(): boolean {
         if (this.getActiveObject()?._objects) {
             return false
@@ -118,6 +145,23 @@ export class canvasEditor {
         }
 
         return false
+    }
+
+
+    /** 根据ID查找元素 */
+    findKlassById(id: string): any {
+
+        let klass;
+        for (let i = 0; i < this.canvas._objects.length; i++) {
+
+
+            if (this.canvas._objects[i].c_code == id) {
+                klass = this.canvas._objects[i]
+                break;
+            }
+        }
+        console.log(klass);
+        return klass
     }
 
 
@@ -136,7 +180,7 @@ const canvaProps = {
     isDrawingMode: false, // 画线模式
     selection: true,  // 元素选择
     backgroundColor: 'white',
-    stopContextMenu: true, // 禁止默认右键菜单
+    // stopContextMenu: true, // 禁止默认右键菜单
     controlsAboveOverlay: true, // 超出clipPath后仍然展示控制条
     // selectionColor: 'white',
     // selectionBorderColor: 'red'
